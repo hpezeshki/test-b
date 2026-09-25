@@ -1,0 +1,61 @@
+# Builds the static export once and publishes it to both free hosts:
+#   1. Cloudflare Pages  (primary, *.pages.dev) — needs CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID secrets
+#   2. GitHub Pages      (mirror, *.github.io/<repo>/) — needs Pages enabled with "GitHub Actions" as the source
+# Either job can be removed independently.
+name: Deploy Valisan demo
+
+on:
+  push:
+    branches: [main, master]
+    paths: ['valisan/**', '.github/workflows/deploy-valisan.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+defaults:
+  run:
+    working-directory: valisan
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm, cache-dependency-path: valisan/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck && npm test
+      - name: Build (Cloudflare Pages, root path)
+        run: npm run build && cp -r out ../out-cf
+      - name: Build (GitHub Pages, sub-path)
+        env:
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+        run: npm run build && touch out/.nojekyll && cp -r out ../out-gh
+      - uses: actions/upload-artifact@v4
+        with: { name: out-cf, path: out-cf }
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: out-gh }
+
+  cloudflare:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ vars.CLOUDFLARE_PROJECT != '' }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: out-cf, path: out-cf }
+      - uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy out-cf --project-name=${{ vars.CLOUDFLARE_PROJECT }}
+
+  github-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: '${{ steps.deployment.outputs.page_url }}' }
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

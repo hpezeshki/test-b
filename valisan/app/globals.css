@@ -1,0 +1,116 @@
+@import "tailwindcss";
+
+/* ───────────────────────── Self-hosted fonts (no Google Fonts dependency) ───────────────────────── */
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn[wght].woff2") format("woff2-variations"), url("/fonts/Vazirmatn[wght].woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-500-italic.woff2") format("woff2"); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Cormorant Garamond"; src: url("/fonts/CormorantGaramond-600-italic.woff2") format("woff2"); font-weight: 600; font-style: italic; font-display: swap; }
+
+/* ───────────────────────── Design tokens (Phase 1 §4) ───────────────────────── */
+@theme {
+  --font-fa: "Vazirmatn", "Shabnam", "Segoe UI", Tahoma, sans-serif;
+  --font-latin: "Cormorant Garamond", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-brand-50: #F9EBEA;
+  --color-brand-100: #F5D5D8;
+  --color-brand-300: #E8A598;
+  --color-brand-500: #C77B6D;
+  --color-brand-700: #A8574B;
+  --color-gold-400: #C9A96E;
+  --color-gold-600: #B08D57;
+
+  --color-bg: #FCFBF7;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F7F3EE;
+  --color-border: #EDE6E0;
+  --color-border-strong: #DCD3CB;
+
+  --color-ink: #1E1E1E;
+  --color-ink-2: #5C544E;
+  --color-muted: #8C827A;
+  --color-on-brand: #FCFBF7;
+
+  --color-success: #6E9A7A;
+  --color-warning: #D9A441;
+  --color-danger: #C2554B;
+  --color-info: #5C544E;
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  --shadow-sm: 0 1px 2px rgba(30,30,30,0.04), 0 1px 1px rgba(30,30,30,0.03);
+  --shadow-md: 0 8px 24px -12px rgba(30,30,30,0.12);
+  --shadow-lg: 0 24px 48px -24px rgba(30,30,30,0.18);
+  --shadow-brand: 0 12px 32px -12px rgba(232,165,152,0.45);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* ───────────────────────── Base ───────────────────────── */
+html { direction: rtl; scroll-behavior: smooth; }
+body {
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-fa);
+  font-size: 15px;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01";
+}
+@media (min-width: 768px) { body { font-size: 16px; } }
+h1, h2, h3, h4 { letter-spacing: -0.01em; text-wrap: balance; }
+::selection { background: var(--color-brand-100); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-brand-300); outline-offset: 2px; border-radius: var(--radius-xs); }
+button, input, select, textarea { font: inherit; }
+.tabular { font-variant-numeric: tabular-nums; }
+.latin { font-family: var(--font-latin); direction: ltr; unicode-bidi: isolate; }
+.eyebrow { font-family: var(--font-latin); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; direction: ltr; unicode-bidi: isolate; color: var(--color-gold-600); }
+
+/* ───────────────────────── Utilities ───────────────────────── */
+@utility glass {
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+@utility hairline-gold { border: 1px solid var(--color-gold-400); }
+@utility hatch {
+  background-image: repeating-linear-gradient(45deg, transparent 0 6px, color-mix(in srgb, var(--color-border) 40%, transparent) 6px 7px);
+}
+@utility container-x { margin-inline: auto; max-width: 1200px; padding-inline: 16px; @media (min-width: 768px) { padding-inline: 32px; } @media (min-width: 1024px) { padding-inline: 48px; } }
+@utility card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+@utility lift { transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out); &:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); } }
+
+/* ───────────────────────── Motion ───────────────────────── */
+@keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@keyframes pulse-dot { 0%, 80%, 100% { opacity: 0.25; } 40% { opacity: 1; } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: none; } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+.fade-up { animation: fade-up 420ms var(--ease-out) both; }
+.skeleton { background: linear-gradient(90deg, var(--color-surface-2) 25%, #fff 50%, var(--color-surface-2) 75%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; border-radius: var(--radius-sm); }
+.dots span { display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: currentColor; margin-inline: 2px; animation: pulse-dot 1.2s infinite; }
+.dots span:nth-child(2) { animation-delay: 0.2s; } .dots span:nth-child(3) { animation-delay: 0.4s; }
+.toast-in { animation: toast-in 320ms var(--ease-out) both; }
+.check-draw { stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw 700ms var(--ease-out) 200ms forwards; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+/* RTL icon mirroring */
+[dir="rtl"] .mirror { transform: scaleX(-1); }

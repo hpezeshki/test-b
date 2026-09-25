@@ -1,0 +1,12 @@
+{
+  "name": "Valisan | والیسان",
+  "short_name": "Valisan",
+  "description": "استودیو پیلاتس، یوگا و سلامت بانوان",
+  "lang": "fa-IR",
+  "dir": "rtl",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCFBF7",
+  "theme_color": "#E8A598",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
