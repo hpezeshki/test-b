@@ -9,6 +9,7 @@ import { MODALITY_LABEL, SESSION_TYPE_LABEL } from '@/domain/labels';
 import type { ID, SessionSlot } from '@/domain/types';
 import { cn } from '@/lib/cn';
 import { Avatar, Chip } from '@/components/ui';
+import { coachPhotos } from '@/data/seed/images';
 import { JalaliMonthPicker } from './JalaliMonthPicker';
 
 export interface SlotPickerProps {
@@ -69,7 +70,7 @@ export function SlotPicker({ selectedId, onSelect, minStart, maxDate, initialCoa
         {byCoach.map(({ coach, slots: cs }) => (
           <div key={coach.id} className="card p-4 md:p-5 fade-up">
             <div className="mb-3 flex items-center gap-3">
-              <Avatar name={coach.displayName} hue={coach.accent} size={38} />
+              <Avatar name={coach.displayName} hue={coach.accent} size={38} srcs={coachPhotos(coach.id)} />
               <div><div className="text-[14px] font-medium">{coach.displayName}</div><div className="text-[12px] text-muted">{coach.title}</div></div>
             </div>
             <div className="grid gap-2 sm:grid-cols-2 xl:grid-cols-3">

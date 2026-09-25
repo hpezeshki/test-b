@@ -6,6 +6,7 @@ import { canModify, cutoffAt } from '@/domain/scheduling';
 import { sameDay } from '@/domain/jalali';
 import { useFmt } from '@/lib/hooks';
 import { Avatar, Badge, Button, type Tone } from '@/components/ui';
+import { coachPhotos } from '@/data/seed/images';
 import { cn } from '@/lib/cn';
 
 const TONE: Record<Booking['status'], Tone> = { confirmed: 'success', pending_verification: 'warning', attended: 'success', no_show: 'danger', cancelled_by_student: 'neutral', cancelled_by_studio: 'neutral', rescheduled: 'info' };
@@ -35,7 +36,7 @@ export function BookingCard({ booking, slot, coach, settings, now, onReschedule,
           </div>
           <div className="mt-1 text-[13.5px] text-ink-2">{MODALITY_LABEL[slot.modality]} · {SESSION_TYPE_LABEL[slot.sessionType]}</div>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[12px] text-muted">
-            {coach && <span className="flex items-center gap-1.5"><Avatar name={coach.displayName} hue={coach.accent} size={18} /> {coach.displayName}</span>}
+            {coach && <span className="flex items-center gap-1.5"><Avatar name={coach.displayName} hue={coach.accent} size={18} srcs={coachPhotos(coach.id)} /> {coach.displayName}</span>}
             <span className="flex items-center gap-1"><MapPin size={12} /> {slot.room}</span>
             {upcoming && <span className="flex items-center gap-1"><CalendarClock size={12} /> {f.rel(start, now)}</span>}
           </div>

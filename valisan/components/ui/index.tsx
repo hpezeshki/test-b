@@ -1,9 +1,10 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@/lib/cn';
 
 export { Button } from './Button';
+export { Photo } from './Photo';
 
 export function Card({ className, children, hover, ...rest }: React.HTMLAttributes<HTMLDivElement> & { hover?: boolean }) {
   return <div className={cn('card', hover && 'lift', className)} {...rest}>{children}</div>;
@@ -91,11 +92,14 @@ export function Modal({ open, onClose, title, children, width = 'max-w-lg' }: { 
   );
 }
 
-export function Avatar({ name, hue = '10', size = 44, className }: { name: string; hue?: string; size?: number; className?: string }) {
+export function Avatar({ name, hue = '10', size = 44, className, srcs }: { name: string; hue?: string; size?: number; className?: string; srcs?: string[] }) {
   const initials = name.split(' ').map((p) => p[0]).slice(0, 2).join('');
+  const [i, setI] = useState(0);
+  const src = srcs?.[i];
   return (
-    <span className={cn('grid shrink-0 place-items-center rounded-full font-medium text-ink', className)} style={{ width: size, height: size, fontSize: size * 0.36, background: `linear-gradient(135deg, hsl(${hue} 60% 92%), hsl(${hue} 55% 78%))` }} aria-hidden>
+    <span className={cn('relative grid shrink-0 place-items-center overflow-hidden rounded-full font-medium text-ink ring-1 ring-border', className)} style={{ width: size, height: size, fontSize: size * 0.36, background: `linear-gradient(135deg, hsl(${hue} 60% 92%), hsl(${hue} 55% 78%))` }} aria-hidden>
       {initials}
+      {src && <img src={src} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer" onError={() => setI((n) => n + 1)} className="absolute inset-0 h-full w-full object-cover" />}
     </span>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { CtaBand } from '@/components/marketing/Sections';
-import { SectionHeading } from '@/components/ui';
+import { CtaBand, StudioGallery } from '@/components/marketing/Sections';
+import { Photo, SectionHeading } from '@/components/ui';
+import { IMAGES } from '@/data/seed/images';
 
 export const metadata: Metadata = { title: 'درباره استودیو' };
 
@@ -22,7 +23,7 @@ export default function AboutPage() {
             <p className="text-[16px] leading-[1.9] text-ink-2">والیسان در سال ۱۴۰۱ با یک ایده‌ی ساده آغاز شد: بانوان به فضایی نیاز دارند که در آن، تمرین نه رقابت باشد و نه اجبار؛ بلکه گفت‌وگویی آرام با بدن. امروز چهار مربی بین‌المللی، سه استودیوی مجهز و صدها هنرجو، این ایده را زندگی می‌کنند.</p>
             <p className="text-[16px] leading-[1.9] text-ink-2">ما به کیفیت حرکت باور داریم، نه به شمارش تکرارها. به همین دلیل کلاس‌های ما کوچک، برنامه‌ها شخصی و مربیان‌مان با دقت انتخاب شده‌اند.</p>
           </div>
-          <div className="aspect-[4/5] rounded-[var(--radius-xl)] bg-gradient-to-br from-brand-100 via-surface-2 to-gold-400/20 shadow-lg" />
+          <Photo srcs={IMAGES.about} alt="فضای استودیو والیسان" priority className="aspect-[4/5] rounded-[var(--radius-xl)] shadow-lg ring-1 ring-gold-400/40" />
         </div>
       </section>
       <section className="bg-surface-2/60 py-20">
@@ -39,6 +40,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      <StudioGallery />
       <CtaBand />
     </>
   );

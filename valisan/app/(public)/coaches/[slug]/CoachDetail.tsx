@@ -4,7 +4,8 @@ import type { Coach } from '@/domain/types';
 import { MODALITY_LABEL, SESSION_TYPE_LABEL } from '@/domain/labels';
 import { WEEKDAYS } from '@/domain/jalali';
 import { useFmt } from '@/lib/hooks';
-import { Avatar, Badge, Button, Card } from '@/components/ui';
+import { Badge, Button, Card, Photo } from '@/components/ui';
+import { coachPhotos } from '@/data/seed/images';
 
 export function CoachDetail({ coach }: { coach: Coach }) {
   const f = useFmt();
@@ -12,9 +13,10 @@ export function CoachDetail({ coach }: { coach: Coach }) {
     <section className="container-x py-14 md:py-20">
       <div className="grid gap-10 lg:grid-cols-[360px_1fr]">
         <div className="space-y-5">
-          <Card className="p-8 text-center">
-            <Avatar name={coach.displayName} hue={coach.accent} size={120} className="mx-auto text-[38px]" />
-            <h1 className="mt-5 text-[24px] font-medium">{coach.displayName}</h1>
+          <Card className="overflow-hidden text-center">
+            <Photo srcs={coachPhotos(coach.id)} alt={coach.displayName} hue={coach.accent} className="aspect-[4/5]" overlay="soft" />
+            <div className="p-8 pt-6">
+            <h1 className="text-[24px] font-medium">{coach.displayName}</h1>
             <div className="text-[14px] text-muted">{coach.title}</div>
             <div className="mt-3 flex items-center justify-center gap-3 text-[13px] text-muted">
               <span className="flex items-center gap-1"><Star size={13} className="text-gold-400" fill="currentColor" /> {f.s(coach.rating)}</span>
@@ -23,6 +25,7 @@ export function CoachDetail({ coach }: { coach: Coach }) {
             <div className="mt-4 flex flex-wrap justify-center gap-1.5">{coach.modalities.map((m) => <Badge key={m} tone="brand">{MODALITY_LABEL[m]}</Badge>)}</div>
             <div className="mt-5">{coach.isAcceptingNewClients ? <Badge tone="success" dot>پذیرش هنرجوی جدید</Badge> : <Badge tone="warning" dot>لیست انتظار</Badge>}</div>
             <Button href="/pricing/" className="mt-6" full>رزرو جلسه با {coach.displayName.split(' ')[0]}</Button>
+            </div>
           </Card>
           <Card className="p-6">
             <div className="mb-3 flex items-center gap-2 font-medium"><Award size={18} className="text-gold-600" /> مدارک و گواهی‌نامه‌ها</div>

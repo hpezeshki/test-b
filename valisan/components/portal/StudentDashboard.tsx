@@ -8,6 +8,7 @@ import { RoleGuard } from '@/lib/rbac';
 import { FITNESS_LEVEL_LABEL, MEMBERSHIP_STATUS_LABEL, MODALITY_LABEL } from '@/domain/labels';
 import type { Booking, SessionSlot } from '@/domain/types';
 import { Avatar, Badge, Button, Card, Empty, Modal, Progress } from '@/components/ui';
+import { coachPhotos } from '@/data/seed/images';
 import { SlotPicker } from '@/components/calendar/SlotPicker';
 import { BookingCard } from './BookingCard';
 
@@ -79,7 +80,7 @@ function Inner() {
           <div className="text-[12px] text-muted">مربی شما</div>
           {coach ? (
             <div className="mt-3 flex items-center gap-4">
-              <Avatar name={coach.displayName} hue={coach.accent} size={60} />
+              <Avatar name={coach.displayName} hue={coach.accent} size={60} srcs={coachPhotos(coach.id)} />
               <div><div className="text-[16px] font-medium">{coach.displayName}</div><div className="text-[12.5px] text-muted">{coach.title}</div><Link href={`/coaches/${coach.slug}/`} className="mt-1 block text-[12px] text-brand-700 hover:underline">مشاهده پروفایل</Link></div>
             </div>
           ) : <div className="mt-3 text-[13px] text-muted">پس از اولین رزرو، مربی شما اینجا نمایش داده می‌شود.</div>}

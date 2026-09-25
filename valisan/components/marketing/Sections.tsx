@@ -6,7 +6,8 @@ import { PACKAGES } from '@/data/seed/packages';
 import { MODALITY_INFO, POSTS, TESTIMONIALS } from '@/data/seed/content';
 import { BLOG_CATEGORY_LABEL, MODALITY_LABEL } from '@/domain/labels';
 import { useFmt } from '@/lib/hooks';
-import { Avatar, Badge, Button, Card, SectionHeading } from '@/components/ui';
+import { Avatar, Badge, Button, Card, Photo, SectionHeading } from '@/components/ui';
+import { blogPhotos, coachPhotos, IMAGES } from '@/data/seed/images';
 import { cn } from '@/lib/cn';
 
 export function Hero() {
@@ -33,16 +34,19 @@ export function Hero() {
           </div>
         </div>
         <div className="relative fade-up" style={{ animationDelay: '120ms' }}>
-          <div className="aspect-[4/5] overflow-hidden rounded-[var(--radius-xl)] bg-gradient-to-br from-brand-50 via-surface-2 to-brand-100 shadow-lg">
-            <div className="flex h-full flex-col items-center justify-center gap-6 p-10 text-center">
-              <img src="/brand/valisan-logo.jpg" alt="Valisan" className="w-[78%] rounded-[var(--radius-lg)] shadow-md" />
-              <p className="max-w-xs text-[14px] leading-7 text-ink-2">«قدرت واقعی از سکوتِ مرکز بدن آغاز می‌شود.»</p>
+          <Photo srcs={IMAGES.hero} alt="استودیو پیلاتس ریفرمر والیسان" priority hover={false} overlay="soft" className="aspect-[4/5] rounded-[var(--radius-xl)] shadow-lg ring-1 ring-gold-400/40">
+            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-on-brand">
+              <div><div className="eyebrow !text-on-brand/80">Studio · Elahieh</div><div className="mt-1 text-[15px] font-medium">«قدرت واقعی از سکوتِ مرکز بدن آغاز می‌شود.»</div></div>
+              <img src="/brand/logo-lockup.png" alt="" className="hidden h-16 w-auto object-contain drop-shadow-md sm:block" />
             </div>
-          </div>
-          <div className="glass absolute -bottom-5 -start-3 rounded-[var(--radius-lg)] p-4 shadow-lg md:-start-8">
-            <div className="text-[12px] text-muted">جلسه بعدی خالی</div>
-            <div className="mt-0.5 text-[15px] font-medium">امروز · ساعت {f.s('18:00')}</div>
-            <div className="text-[12px] text-brand-700">پیلاتس ریفرمر · {f.s(2)} صندلی باقی‌مانده</div>
+          </Photo>
+          <div className="glass absolute -bottom-5 -start-3 flex items-center gap-3 rounded-[var(--radius-lg)] p-3 pe-5 shadow-lg md:-start-8">
+            <Photo srcs={IMAGES.heroThumb} alt="" hover={false} className="size-14 rounded-[var(--radius-sm)]" hue="354" />
+            <div>
+              <div className="text-[12px] text-muted">جلسه بعدی خالی</div>
+              <div className="mt-0.5 text-[15px] font-medium">امروز · ساعت {f.s('18:00')}</div>
+              <div className="text-[12px] text-brand-700">پیلاتس ریفرمر · {f.s(2)} صندلی باقی‌مانده</div>
+            </div>
           </div>
         </div>
       </div>
@@ -58,8 +62,8 @@ export function Modalities({ limit }: { limit?: number }) {
       <SectionHeading eyebrow="Modalities" title="کلاس‌ها و روش‌های تمرینی" desc="هر کلاس با ظرفیت محدود برگزار می‌شود تا توجه مربی به تک‌تک هنرجویان حفظ شود." />
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {list.map((m, i) => (
-          <Card key={m.key} hover className="overflow-hidden fade-up" style={{ animationDelay: `${i * 60}ms` }}>
-            <div className="h-36" style={{ background: `linear-gradient(135deg, hsl(${m.accent} 60% 94%), hsl(${m.accent} 55% 82%))` }} />
+          <Card key={m.key} hover className="group overflow-hidden fade-up" style={{ animationDelay: `${i * 60}ms` }}>
+            <Photo srcs={IMAGES.modality[m.key]} alt={m.title} hue={m.accent} className="h-44" />
             <div className="space-y-2 p-5">
               <div className="flex items-center justify-between"><h3 className="text-[17px] font-medium">{m.title}</h3><Badge tone="gold">{m.level}</Badge></div>
               <p className="text-[13.5px] leading-6 text-ink-2">{m.desc}</p>
@@ -81,12 +85,14 @@ export function CoachRoster({ limit }: { limit?: number }) {
         <SectionHeading eyebrow="The Team" title="مربیان والیسان" desc="مدرک بین‌المللی، سال‌ها تجربه و نگاهی دقیق به بدن هر هنرجو." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {(limit ? COACHES.slice(0, limit) : COACHES).map((c) => (
-            <Link key={c.id} href={`/coaches/${c.slug}/`} className="card lift block p-6 text-center">
-              <Avatar name={c.displayName} hue={c.accent} size={88} className="mx-auto text-[28px]" />
-              <h3 className="mt-4 text-[17px] font-medium">{c.displayName}</h3>
+            <Link key={c.id} href={`/coaches/${c.slug}/`} className="card lift group block overflow-hidden text-center">
+              <Photo srcs={coachPhotos(c.id)} alt={c.displayName} hue={c.accent} className="aspect-[4/5]" overlay="soft" />
+              <div className="p-5">
+              <h3 className="text-[17px] font-medium">{c.displayName}</h3>
               <div className="text-[13px] text-muted">{c.title}</div>
               <div className="mt-3 flex flex-wrap justify-center gap-1.5">{c.modalities.slice(0, 2).map((m) => <Badge key={m} tone="brand">{MODALITY_LABEL[m]}</Badge>)}</div>
               <div className="mt-3 flex items-center justify-center gap-1 text-[12px] text-muted"><Star size={12} className="text-gold-400" fill="currentColor" /> {f.s(c.rating)} · {f.s(c.yearsExperience)} سال تجربه</div>
+              </div>
             </Link>
           ))}
         </div>
@@ -157,8 +163,8 @@ export function BlogTeaser() {
 
 export function PostCard({ post, f }: { post: (typeof POSTS)[number]; f: ReturnType<typeof useFmt> }) {
   return (
-    <Link href={`/blog/${post.slug}/`} className="card lift block overflow-hidden">
-      <div className="h-40" style={{ background: `linear-gradient(135deg, hsl(${post.accent} 60% 94%), hsl(${post.accent} 55% 82%))` }} />
+    <Link href={`/blog/${post.slug}/`} className="card lift group block overflow-hidden">
+      <Photo srcs={blogPhotos(post.slug, post.category)} alt={post.title} hue={post.accent} className="h-44" />
       <div className="space-y-2 p-5">
         <div className="flex items-center gap-2 text-[12px] text-muted"><Badge tone="brand">{BLOG_CATEGORY_LABEL[post.category]}</Badge><span>{f.s(post.readMinutes)} دقیقه مطالعه</span></div>
         <h3 className="text-[16px] font-medium leading-7">{post.title}</h3>
@@ -172,11 +178,31 @@ export function CtaBand() {
   return (
     <section className="container-x py-10">
       <div className="relative overflow-hidden rounded-[var(--radius-xl)] bg-ink px-8 py-14 text-center text-on-brand md:px-16">
+        <Photo srcs={IMAGES.cta} alt="" hover={false} overlay="strong" className="absolute inset-0 !bg-ink" imgClassName="opacity-90" />
         <div className="pointer-events-none absolute -top-20 -end-20 size-72 rounded-full bg-brand-300/30 blur-3xl" />
+        <div className="relative">
         <div className="eyebrow !text-gold-400">Begin</div>
         <h2 className="mt-3 text-[28px] font-light md:text-[36px]">اولین جلسه‌ی خود را امروز رزرو کنید</h2>
-        <p className="mx-auto mt-3 max-w-lg text-[15px] leading-8 text-on-brand/75">با یک جلسه‌ی تکی شروع کنید؛ ارزیابی وضعیت بدنی و معرفی مربی مناسب، هدیه‌ی ما به شماست.</p>
+        <p className="mx-auto mt-3 max-w-lg text-[15px] leading-8 text-on-brand/85">با یک جلسه‌ی تکی شروع کنید؛ ارزیابی وضعیت بدنی و معرفی مربی مناسب، هدیه‌ی ما به شماست.</p>
         <div className="mt-7 flex justify-center gap-3"><Button href="/join/drop-in/assessment/" size="lg" variant="secondary">رزرو جلسه تکی</Button><Button href="/pricing/" size="lg" variant="gold" className="!text-on-brand !border-gold-400/70">مشاهده عضویت‌ها</Button></div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const STUDIO_CAPTIONS = ['استودیو ریفرمر', 'سالن انتظار', 'اتاق ریکاوری', 'استودیو مت'];
+export function StudioGallery() {
+  return (
+    <section className="container-x py-20">
+      <SectionHeading eyebrow="The Space" title="فضای استودیو" desc="نور طبیعی، چوب گرم و سکوت؛ سه استودیوی مستقل که برای تمرکز طراحی شده‌اند." />
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+        {IMAGES.studio.map((srcs, i) => (
+          <figure key={i} className={cn('group relative', i % 2 === 0 ? 'md:-translate-y-4' : 'md:translate-y-4')}>
+            <Photo srcs={srcs} alt={STUDIO_CAPTIONS[i]} hue={['10', '39', '354', '25'][i]} overlay="soft" className={cn('rounded-[var(--radius-lg)] ring-1 ring-border', i % 2 === 0 ? 'aspect-[3/4]' : 'aspect-[4/3]')} />
+            <figcaption className="pointer-events-none absolute bottom-3 start-3 rounded-full bg-surface/85 px-3 py-1 text-[12px] backdrop-blur">{STUDIO_CAPTIONS[i]}</figcaption>
+          </figure>
+        ))}
       </div>
     </section>
   );

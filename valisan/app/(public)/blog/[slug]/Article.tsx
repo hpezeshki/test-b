@@ -5,7 +5,8 @@ import type { BlogPost } from '@/domain/types';
 import { POSTS } from '@/data/seed/content';
 import { BLOG_CATEGORY_LABEL } from '@/domain/labels';
 import { useFmt } from '@/lib/hooks';
-import { Badge } from '@/components/ui';
+import { Badge, Photo } from '@/components/ui';
+import { blogPhotos } from '@/data/seed/images';
 import { PostCard } from '@/components/marketing/Sections';
 
 export function Article({ post }: { post: BlogPost }) {
@@ -19,7 +20,7 @@ export function Article({ post }: { post: BlogPost }) {
         <h1 className="mt-4 text-[30px] font-light leading-[1.35] md:text-[40px]">{post.title}</h1>
         <div className="mt-4 text-[13px] text-muted">{post.author} · {f.s(post.publishedJalali)} · {f.s(post.readMinutes)} دقیقه مطالعه</div>
       </header>
-      <div className="mx-auto mt-10 h-64 max-w-4xl rounded-[var(--radius-xl)]" style={{ background: `linear-gradient(135deg, hsl(${post.accent} 60% 94%), hsl(${post.accent} 55% 82%))` }} />
+      <Photo srcs={blogPhotos(post.slug, post.category)} alt={post.title} hue={post.accent} priority hover={false} className="mx-auto mt-10 aspect-[21/9] max-w-4xl rounded-[var(--radius-xl)] ring-1 ring-border" />
       <div className="mx-auto mt-10 max-w-[68ch] space-y-6 text-[17px] leading-[1.95] text-ink-2">
         <p className="text-[19px] text-ink">{post.excerpt}</p>
         {post.paragraphs.map((p, i) => <p key={i}>{f.s(p)}</p>)}

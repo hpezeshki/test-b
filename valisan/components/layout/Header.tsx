@@ -35,12 +35,12 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className={cn('sticky top-0 z-40 transition-all duration-300', scrolled || open ? 'glass shadow-sm' : 'bg-transparent')}>
+    <header className={cn('sticky top-0 z-40 border-b backdrop-blur-lg backdrop-saturate-150 transition-all duration-300', scrolled || open ? 'bg-bg/85 border-gold-400/30 shadow-sm' : 'bg-bg/70 border-gold-400/15')}>
       <div className="container-x flex h-16 items-center justify-between gap-3 md:h-[72px]">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="والیسان">
-          <span className="grid size-9 place-items-center rounded-[10px] bg-brand-50 latin text-[22px] font-semibold text-brand-500 leading-none">V</span>
+          <img src="/brand/logo-v.png" alt="" className="h-9 w-auto object-contain md:h-10" />
           <span className="flex flex-col leading-none">
-            <span className="latin text-[20px] font-semibold tracking-[0.18em] text-ink">VALISAN</span>
+            <span className="latin text-[19px] font-semibold tracking-[0.18em] text-ink md:text-[20px]">VALISAN</span>
             <span className="eyebrow whitespace-nowrap text-[9px] tracking-[0.28em]">Pilates · Yoga · Wellness</span>
           </span>
         </Link>
