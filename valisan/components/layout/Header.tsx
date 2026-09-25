@@ -36,7 +36,7 @@ export function Header() {
 
   return (
     <header className={cn('sticky top-0 z-40 transition-all duration-300', scrolled || open ? 'glass shadow-sm' : 'bg-transparent')}>
-      <div className="container-x flex h-16 items-center justify-between gap-4 md:h-[72px]">
+      <div className="container-x flex h-16 items-center justify-between gap-3 md:h-[72px]">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="والیسان">
           <span className="grid size-9 place-items-center rounded-[10px] bg-brand-50 latin text-[22px] font-semibold text-brand-500 leading-none">V</span>
           <span className="flex flex-col leading-none">
@@ -47,12 +47,12 @@ export function Header() {
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="اصلی">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} className={cn('whitespace-nowrap rounded-full px-3 py-2 text-[14px] transition-colors hover:bg-brand-50', pathname?.startsWith(n.href) ? 'text-brand-700 font-medium' : 'text-ink-2')}>{n.label}</Link>
+            <Link key={n.href} href={n.href} className={cn('whitespace-nowrap rounded-full px-2.5 py-2 text-[13.5px] transition-colors hover:bg-brand-50', pathname?.startsWith(n.href) ? 'text-brand-700 font-medium' : 'text-ink-2')}>{n.label}</Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-1.5">
-          <button onClick={() => setNumerals(numerals === 'persian' ? 'latin' : 'persian')} className="hidden h-9 items-center gap-1 rounded-full border border-border px-3 text-[12px] text-ink-2 hover:bg-brand-50 sm:flex tabular" title="تغییر نمایش اعداد" aria-label="تغییر نمایش اعداد">
+        <div className="flex shrink-0 items-center gap-1">
+          <button onClick={() => setNumerals(numerals === 'persian' ? 'latin' : 'persian')} className="hidden h-9 items-center gap-1 rounded-full border border-border px-2.5 text-[12px] text-ink-2 hover:bg-brand-50 sm:flex tabular" title="تغییر نمایش اعداد" aria-label="تغییر نمایش اعداد">
             <span className={cn(numerals === 'persian' ? 'text-ink font-medium' : 'text-muted')}>۱۲۳</span><span className="text-border-strong">|</span><span className={cn('latin', numerals === 'latin' ? 'text-ink font-medium' : 'text-muted')}>123</span>
           </button>
           <NotificationBell />
@@ -60,14 +60,14 @@ export function Header() {
             <div className="hidden items-center gap-1 md:flex">
               <Link href={portalHome(user.role)} className="flex h-9 items-center gap-2 whitespace-nowrap rounded-full bg-brand-50 ps-1.5 pe-3 text-[13px] hover:bg-brand-100">
                 <span className="grid size-6 place-items-center rounded-full bg-brand-300 text-[11px] text-ink">{user.firstName[0]}</span>
-                <span className="font-medium">{user.firstName}</span><span className="text-muted">· {ROLE_LABEL[user.role]}</span>
+                <span className="font-medium">{user.firstName}</span><span className="hidden text-muted xl:inline">· {ROLE_LABEL[user.role]}</span>
               </Link>
               <button onClick={() => { logout(); router.push('/'); }} className="grid size-9 place-items-center rounded-full text-muted hover:bg-brand-50 hover:text-ink" aria-label="خروج"><LogOut size={17} /></button>
             </div>
           ) : (
             <div className="hidden md:block"><Button href="/login/" size="sm" variant="ghost">ورود</Button></div>
           )}
-          <div className="hidden md:block"><Button href="/pricing/" size="sm">شروع ثبت‌نام</Button></div>
+          {!(hydrated && user) && <div className="hidden md:block"><Button href="/pricing/" size="sm">شروع ثبت‌نام</Button></div>}
           <button className="grid size-10 place-items-center rounded-full hover:bg-brand-50 lg:hidden" onClick={() => setOpen((o) => !o)} aria-label="منو" aria-expanded={open}>{open ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
