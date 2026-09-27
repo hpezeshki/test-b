@@ -14,7 +14,7 @@ export default function ContactPage() {
           <div className="flex items-start gap-3"><Phone className="mt-1 shrink-0 text-brand-500" size={20} /><div><div className="font-medium">تلفن</div><div className="text-ink-2 tabular">۰۲۱-۲۶۰۰-۴۴۵۵ · ۰۹۱۲-۰۰۰-۰۰۰۰</div></div></div>
           <div className="flex items-start gap-3"><Clock className="mt-1 shrink-0 text-brand-500" size={20} /><div><div className="font-medium">ساعات کاری</div><div className="text-ink-2">شنبه تا پنجشنبه، ۸ صبح تا ۸ شب · جمعه‌ها تعطیل</div></div></div>
           <div className="flex items-start gap-3"><AtSign className="mt-1 shrink-0 text-brand-500" size={20} /><div><div className="font-medium">اینستاگرام</div><div className="latin text-ink-2">@valisan.studio</div></div></div>
-          <Button href="/pricing/" className="mt-2">رزرو اولین جلسه</Button>
+          <Button href="/pricing" className="mt-2">رزرو اولین جلسه</Button>
         </Card>
         <div className="relative min-h-72 overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface-2">
           <div className="absolute inset-0 opacity-60" style={{ backgroundImage: 'linear-gradient(#EDE6E0 1px, transparent 1px), linear-gradient(90deg, #EDE6E0 1px, transparent 1px)', backgroundSize: '32px 32px' }} />

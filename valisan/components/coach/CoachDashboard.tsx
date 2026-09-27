@@ -11,7 +11,7 @@ import type { SessionSlot } from '@/domain/types';
 import { Avatar, Badge, Button, Card, Empty, Stat } from '@/components/ui';
 import { cn } from '@/lib/cn';
 
-export function CoachDashboard() { return <RoleGuard allow={['coach', 'super_admin']} next="/coach/"><Inner /></RoleGuard>; }
+export function CoachDashboard() { return <RoleGuard allow={['coach', 'super_admin']} next="/coach"><Inner /></RoleGuard>; }
 
 function Inner() {
   const user = useSessionUser()!;

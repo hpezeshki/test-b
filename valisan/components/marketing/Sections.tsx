@@ -25,8 +25,8 @@ export function Hero() {
           <h1 className="text-[40px] leading-[1.15] font-light md:text-[56px] lg:text-[64px]">بازگشت به بدن،<br />در سکوتِ <span className="text-brand-500">والیسان</span></h1>
           <p className="max-w-lg text-[17px] leading-[1.9] text-ink-2">استودیوی خصوصی بانوان در قلب الهیه؛ پیلاتس ریفرمر، یوگا و حرکات اصلاحی با مربیان بین‌المللی، در گروه‌های حداکثر {f.s(3)} تا {f.s(6)} نفره.</p>
           <div className="flex flex-wrap gap-3">
-            <Button href="/pricing/" size="lg">شروع ثبت‌نام</Button>
-            <Button href="/classes/" size="lg" variant="ghost">آشنایی با کلاس‌ها <ArrowLeft size={18} /></Button>
+            <Button href="/pricing" size="lg">شروع ثبت‌نام</Button>
+            <Button href="/classes" size="lg" variant="ghost">آشنایی با کلاس‌ها <ArrowLeft size={18} /></Button>
           </div>
           <div className="flex items-center gap-6 pt-2 text-[13px] text-muted">
             <span className="flex items-center gap-1.5"><Star size={14} className="text-gold-400" fill="currentColor" /> {f.s('4.9')} از {f.s(320)} نظر</span>
@@ -75,7 +75,7 @@ export function Modalities({ limit }: { limit?: number }) {
           </Card>
         ))}
       </div>
-      {limit && <div className="mt-8 text-center"><Button href="/classes/" variant="ghost">همه کلاس‌ها <ArrowLeft size={16} /></Button></div>}
+      {limit && <div className="mt-8 text-center"><Button href="/classes" variant="ghost">همه کلاس‌ها <ArrowLeft size={16} /></Button></div>}
     </section>
   );
 }
@@ -88,7 +88,7 @@ export function CoachRoster({ limit }: { limit?: number }) {
         <SectionHeading eyebrow="The Team" title="مربیان والیسان" desc="مدرک بین‌المللی، سال‌ها تجربه و نگاهی دقیق به بدن هر هنرجو." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {(limit ? COACHES.slice(0, limit) : COACHES).map((c) => (
-            <Link key={c.id} href={`/coaches/${c.slug}/`} className="card lift group block overflow-hidden text-center">
+            <Link prefetch={false} key={c.id} href={`/coaches/${c.slug}`} className="card lift group block overflow-hidden text-center">
               <Photo srcs={coachPhotos(c.id)} alt={c.displayName} hue={c.accent} className="aspect-[4/5]" overlay="soft" />
               <div className="p-5">
               <h3 className="text-[17px] font-medium">{c.displayName}</h3>
@@ -123,7 +123,7 @@ export function PricingTable({ compact }: { compact?: boolean }) {
             <ul className="mt-5 flex-1 space-y-2 text-[13.5px] text-ink-2">
               {p.perks.map((x) => <li key={x} className="flex items-start gap-2.5"><span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-100"><Check size={12} strokeWidth={2} /></span><span>{f.s(x)}</span></li>)}
             </ul>
-            <Button href={`/join/${p.slug}/assessment/`} className="mt-6" variant={p.isFeatured ? 'primary' : 'secondary'} full>{p.kind === 'drop_in' ? 'رزرو جلسه تکی' : 'شروع ثبت‌نام'}</Button>
+            <Button href={`/join/${p.slug}/assessment`} className="mt-6" variant={p.isFeatured ? 'primary' : 'secondary'} full>{p.kind === 'drop_in' ? 'رزرو جلسه تکی' : 'شروع ثبت‌نام'}</Button>
           </div>
         ))}
       </div>
@@ -158,7 +158,7 @@ export function BlogTeaser() {
         <div className="grid gap-5 md:grid-cols-3">
           {POSTS.slice(0, 3).map((p) => <PostCard key={p.slug} post={p} f={f} />)}
         </div>
-        <div className="mt-8 text-center"><Button href="/blog/" variant="ghost">همه مقالات <ArrowLeft size={16} /></Button></div>
+        <div className="mt-8 text-center"><Button href="/blog" variant="ghost">همه مقالات <ArrowLeft size={16} /></Button></div>
       </div>
     </section>
   );
@@ -166,7 +166,7 @@ export function BlogTeaser() {
 
 export function PostCard({ post, f }: { post: (typeof POSTS)[number]; f: ReturnType<typeof useFmt> }) {
   return (
-    <Link href={`/blog/${post.slug}/`} className="card lift group block overflow-hidden">
+    <Link prefetch={false} href={`/blog/${post.slug}`} className="card lift group block overflow-hidden">
       <Photo srcs={blogPhotos(post.slug, post.category)} alt={post.title} hue={post.accent} className="h-44" />
       <div className="space-y-2 p-5">
         <div className="flex items-center gap-2 text-[12px] text-muted"><Badge tone="brand">{BLOG_CATEGORY_LABEL[post.category]}</Badge><span>{f.s(post.readMinutes)} دقیقه مطالعه</span></div>
@@ -187,7 +187,7 @@ export function CtaBand() {
         <div className="eyebrow !text-gold-400">Begin</div>
         <h2 className="mt-3 text-[28px] font-light md:text-[36px]">اولین جلسه‌ی خود را امروز رزرو کنید</h2>
         <p className="mx-auto mt-3 max-w-lg text-[15px] leading-8 text-on-brand/85">با یک جلسه‌ی تکی شروع کنید؛ ارزیابی وضعیت بدنی و معرفی مربی مناسب، هدیه‌ی ما به شماست.</p>
-        <div className="mt-7 flex justify-center gap-3"><Button href="/join/drop-in/assessment/" size="lg" variant="light">رزرو جلسه تکی</Button><Button href="/pricing/" size="lg" variant="gold" className="!text-on-brand !border-gold-400/70">مشاهده عضویت‌ها</Button></div>
+        <div className="mt-7 flex justify-center gap-3"><Button href="/join/drop-in/assessment" size="lg" variant="light">رزرو جلسه تکی</Button><Button href="/pricing" size="lg" variant="gold" className="!text-on-brand !border-gold-400/70">مشاهده عضویت‌ها</Button></div>
         </div>
       </div>
     </section>

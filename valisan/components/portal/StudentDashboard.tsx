@@ -13,7 +13,7 @@ import { SlotPicker } from '@/components/calendar/SlotPicker';
 import { BookingCard } from './BookingCard';
 
 export function StudentDashboard() {
-  return <RoleGuard allow={['student']} next="/portal/"><Inner /></RoleGuard>;
+  return <RoleGuard allow={['student']} next="/portal"><Inner /></RoleGuard>;
 }
 
 function Inner() {
@@ -73,7 +73,7 @@ function Inner() {
               {membership.quotaHeld > 0 && <div className="mt-2 text-[12px] text-[#9A6F1E]">{f.s(membership.quotaHeld)} جلسه در انتظار تأیید پرداخت</div>}
             </>
           ) : (
-            <Empty title="عضویت فعالی ندارید" action={<Button href="/pricing/" size="sm">انتخاب بسته</Button>} />
+            <Empty title="عضویت فعالی ندارید" action={<Button href="/pricing" size="sm">انتخاب بسته</Button>} />
           )}
         </Card>
         <Card className="p-6">
@@ -81,7 +81,7 @@ function Inner() {
           {coach ? (
             <div className="mt-3 flex items-center gap-4">
               <Avatar name={coach.displayName} hue={coach.accent} size={60} srcs={coachPhotos(coach.id)} />
-              <div><div className="text-[16px] font-medium">{coach.displayName}</div><div className="text-[12.5px] text-muted">{coach.title}</div><Link href={`/coaches/${coach.slug}/`} className="mt-1 block text-[12px] text-brand-700 hover:underline">مشاهده پروفایل</Link></div>
+              <div><div className="text-[16px] font-medium">{coach.displayName}</div><div className="text-[12.5px] text-muted">{coach.title}</div><Link prefetch={false} href={`/coaches/${coach.slug}`} className="mt-1 block text-[12px] text-brand-700 hover:underline">مشاهده پروفایل</Link></div>
             </div>
           ) : <div className="mt-3 text-[13px] text-muted">پس از اولین رزرو، مربی شما اینجا نمایش داده می‌شود.</div>}
           <div className="mt-4 grid grid-cols-2 gap-2 text-center text-[12px]">
@@ -96,7 +96,7 @@ function Inner() {
               <div className="mt-2 flex items-center gap-2 text-[14px]"><ClipboardCheck size={16} className="text-success" /> ثبت‌شده در {f.d(assessment.submittedAt, 'weekday')}</div>
               <div className="mt-2 text-[13px] text-ink-2">سطح اعلام‌شده: {FITNESS_LEVEL_LABEL[assessment.fitnessLevel]}</div>
               {assessment.reviewedBy && <div className="mt-2 rounded-[var(--radius-sm)] bg-brand-50 p-3 text-[12.5px] leading-6"><Quote size={13} className="inline text-brand-700" /> نظر کادر تخصصی: {assessment.reviewedBy.note}</div>}
-              <Link href={`/join/${pkg?.slug ?? 'monthly-12'}/assessment/`} className="mt-3 block text-[12px] text-brand-700 hover:underline">به‌روزرسانی پاسخ‌ها</Link>
+              <Link prefetch={false} href={`/join/${pkg?.slug ?? 'monthly-12'}/assessment/`} className="mt-3 block text-[12px] text-brand-700 hover:underline">به‌روزرسانی پاسخ‌ها</Link>
             </>
           ) : <div className="mt-3 text-[13px] text-muted">هنوز فرم ارزیابی سلامت را تکمیل نکرده‌اید.</div>}
         </Card>

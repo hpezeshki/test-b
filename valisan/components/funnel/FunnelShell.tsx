@@ -10,7 +10,7 @@ const STEPS = ['ارزیابی سلامت', 'انتخاب زمان', 'پرداخ
 export function FunnelShell({ pkg, step, children, aside }: { pkg: Package; step: 1 | 2 | 3 | 4; children: React.ReactNode; aside?: React.ReactNode }) {
   const f = useFmt();
   return (
-    <RoleGuard allow={['student', 'super_admin']} next={`/join/${pkg.slug}/${['assessment', 'schedule', 'checkout', 'done'][step - 1]}/`}>
+    <RoleGuard allow={['student', 'super_admin']} next={`/join/${pkg.slug}/${['assessment', 'schedule', 'checkout', 'done'][step - 1]}`}>
       <section className="container-x py-10 md:py-14">
         <ol className="mx-auto mb-10 flex max-w-2xl items-center gap-2" aria-label="مراحل ثبت‌نام">
           {STEPS.map((s, i) => {

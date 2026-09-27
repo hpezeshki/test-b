@@ -22,7 +22,7 @@ export default function PricingPage() {
               <p className="mt-2 text-[14px] leading-7 text-ink-2">{q.a}</p>
             </details>
           ))}
-          <div className="p-5 text-center text-[13px]"><Link href="/faq/" className="text-brand-700 hover:underline">همه پرسش‌های متداول</Link></div>
+          <div className="p-5 text-center text-[13px]"><Link prefetch={false} href="/faq" className="text-brand-700 hover:underline">همه پرسش‌های متداول</Link></div>
         </div>
       </section>
     </>

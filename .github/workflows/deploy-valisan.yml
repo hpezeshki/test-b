@@ -1,7 +1,5 @@
-# Builds the static export once and publishes it to both free hosts:
-#   1. Cloudflare Pages  (primary, *.pages.dev) — needs CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID secrets
-#   2. GitHub Pages      (mirror, *.github.io/<repo>/) — needs Pages enabled with "GitHub Actions" as the source
-# Either job can be removed independently.
+# Builds the static export and publishes it to Cloudflare Pages (free tier).
+# Netlify deploys are configured by netlify.toml in the project instead (connect the repo in the Netlify UI).
 name: Deploy Valisan demo
 
 on:
@@ -12,8 +10,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 defaults:
   run:
@@ -28,16 +24,9 @@ jobs:
         with: { node-version: 20, cache: npm, cache-dependency-path: valisan/package-lock.json }
       - run: npm ci
       - run: npm run typecheck && npm test
-      - name: Build (Cloudflare Pages, root path)
-        run: npm run build && cp -r out ../out-cf
-      - name: Build (GitHub Pages, sub-path)
-        env:
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
-        run: npm run build && touch out/.nojekyll && cp -r out ../out-gh
+      - run: npm run build
       - uses: actions/upload-artifact@v4
-        with: { name: out-cf, path: out-cf }
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: out-gh }
+        with: { name: out, path: valisan/out }
 
   cloudflare:
     needs: build
@@ -45,17 +34,9 @@ jobs:
     if: ${{ vars.CLOUDFLARE_PROJECT != '' }}
     steps:
       - uses: actions/download-artifact@v4
-        with: { name: out-cf, path: out-cf }
+        with: { name: out, path: out }
       - uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy out-cf --project-name=${{ vars.CLOUDFLARE_PROJECT }}
-
-  github-pages:
-    needs: build
-    runs-on: ubuntu-latest
-    environment: { name: github-pages, url: '${{ steps.deployment.outputs.page_url }}' }
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+          command: pages deploy out --project-name=${{ vars.CLOUDFLARE_PROJECT }}

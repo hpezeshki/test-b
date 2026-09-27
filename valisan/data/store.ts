@@ -40,7 +40,8 @@ export interface AppState extends SeedState {
 
   login: (phone: string, password: string) => { ok: boolean; reason?: string; role?: Role };
   loginAs: (role: Role) => void;
-  logout: () => void;
+  /** Atomic sign-out: clears session + drafts in memory, writes the purged state to IndexedDB, then hard-reloads to /login so no client cache survives. */
+  logout: () => Promise<void>;
 
   startCheckout: (packageSlug: string) => void;
   setCheckoutSlot: (slotId?: ID) => void;
@@ -74,6 +75,13 @@ const idbStorage: StateStorage = {
 };
 
 export const STORAGE_KEY = `valisan-demo@v${SEED_VERSION}`;
+
+/** Fields that survive a reload (everything except transient UI state). */
+const partialize = (s: AppState) => ({
+  seedVersion: s.seedVersion, seededAt: s.seededAt, users: s.users, coaches: s.coaches, packages: s.packages, settings: s.settings, slots: s.slots, memberships: s.memberships,
+  bookings: s.bookings, transactions: s.transactions, healthAssessments: s.healthAssessments, notifications: s.notifications, audit: s.audit,
+  clockOffsetMs: s.clockOffsetMs, numerals: s.numerals, sessionUserId: s.sessionUserId, checkout: s.checkout, intakeDraft: s.intakeDraft, lastCheckout: s.lastCheckout,
+});
 
 export const useStore = create<AppState>()(
   persist(
@@ -142,7 +150,7 @@ export const useStore = create<AppState>()(
           setState((st) => ({ bookings: st.bookings.map((b) => (due.some((d) => d.b.id === b.id) ? { ...b, reminders: { sent2hBefore: true } } : b)) }));
           for (const { b, slot } of due) {
             if (new Date(slot.startsAt) < now) continue; // already started — no retroactive reminder
-            emit(b.userId, 'class_reminder_2h', { slot, coach: s.coaches.find((c) => c.id === slot.coachId) }, '/portal/');
+            emit(b.userId, 'class_reminder_2h', { slot, coach: s.coaches.find((c) => c.id === slot.coachId) }, '/portal');
           }
         },
         setNumerals: (numerals) => setState({ numerals }),
@@ -159,7 +167,11 @@ export const useStore = create<AppState>()(
           const u = getState().users.find((x) => x.role === role && (role !== 'coach' || x.id === 'u_coach1'));
           if (u) { setState({ sessionUserId: u.id }); log(u.id, 'auth.login', `${u.firstName} ${u.lastName} (حساب نمایشی) وارد شد.`); }
         },
-        logout: () => setState({ sessionUserId: null }),
+        logout: async () => {
+          setState({ sessionUserId: null, checkout: null, intakeDraft: DEFAULT_INTAKE, lastCheckout: null, toasts: [] });
+          try { await set(STORAGE_KEY, JSON.stringify({ state: partialize(getState()), version: SEED_VERSION })); } catch { /* storage blocked → in-memory only */ }
+          if (typeof window !== 'undefined') window.location.href = '/login';
+        },
 
         startCheckout: (packageSlug) => setState((s) => ({ checkout: s.checkout?.packageSlug === packageSlug ? s.checkout : { packageSlug } })),
         setCheckoutSlot: (slotId) => setState((s) => ({ checkout: s.checkout ? { ...s.checkout, slotId } : null })),
@@ -210,7 +222,7 @@ export const useStore = create<AppState>()(
           log('system', 'ipg.succeeded', `تراکنش ${tx.id} با موفقیت تسویه شد.`);
           const pkgTitle = s.packages.find((p) => p.id === tx.packageId)?.title;
           emit(tx.userId, 'payment_approved', { packageTitle: pkgTitle });
-          if (booking && slot) emit(tx.userId, 'booking_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId), cutoffHours: s.settings.modificationCutoffHours }, '/portal/');
+          if (booking && slot) emit(tx.userId, 'booking_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId), cutoffHours: s.settings.modificationCutoffHours }, '/portal');
         },
         submitCardToCard: ({ trackingNumber, receipt }) => {
           const created = createPending('card_to_card');
@@ -246,7 +258,7 @@ export const useStore = create<AppState>()(
             memberships: st.memberships.map((m) => (m.id === membership.id ? { ...m, quotaUsed: m.quotaUsed + (pending ? 0 : 1), quotaHeld: m.quotaHeld + (pending ? 1 : 0) } : m)),
             users: st.users.map((u) => (u.id === s.sessionUserId && !u.assignedCoachIds.includes(slot.coachId) ? { ...u, assignedCoachIds: [...u.assignedCoachIds, slot.coachId] } : u)),
           }));
-          if (!pending) emit(s.sessionUserId, 'booking_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId), cutoffHours: s.settings.modificationCutoffHours }, '/portal/');
+          if (!pending) emit(s.sessionUserId, 'booking_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId), cutoffHours: s.settings.modificationCutoffHours }, '/portal');
           return { ok: true };
         },
         cancelBooking: (bookingId) => {
@@ -262,7 +274,7 @@ export const useStore = create<AppState>()(
             bookings: st.bookings.map((x) => (x.id === b.id ? { ...x, status: 'cancelled_by_student', cancellationReason: 'لغو توسط هنرجو' } : x)),
             memberships: st.memberships.map((m) => (m.id === b.membershipId ? { ...m, quotaUsed: m.quotaUsed - (wasHeld ? 0 : 1), quotaHeld: m.quotaHeld - (wasHeld ? 1 : 0) } : m)),
           }));
-          emit(b.userId, 'cancellation_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId) }, '/portal/');
+          emit(b.userId, 'cancellation_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId) }, '/portal');
           return { ok: true };
         },
         rescheduleBooking: (bookingId, newSlotId) => {
@@ -282,7 +294,7 @@ export const useStore = create<AppState>()(
             bookings: [...st.bookings.map((x) => (x.id === b.id ? { ...x, status: 'rescheduled' as const, rescheduledToBookingId: nb.id } : x)), nb],
             users: st.users.map((u) => (u.id === b.userId && !u.assignedCoachIds.includes(newSlot.coachId) ? { ...u, assignedCoachIds: [...u.assignedCoachIds, newSlot.coachId] } : u)),
           }));
-          emit(b.userId, 'reschedule_confirmed', { slot: newSlot, coach: s.coaches.find((c) => c.id === newSlot.coachId) }, '/portal/');
+          emit(b.userId, 'reschedule_confirmed', { slot: newSlot, coach: s.coaches.find((c) => c.id === newSlot.coachId) }, '/portal');
           return { ok: true };
         },
         markAttendance: (bookingId, status) => {
@@ -305,11 +317,11 @@ export const useStore = create<AppState>()(
             bookings: st.bookings.map((b) => (heldIds.includes(b.id) ? { ...b, status: 'confirmed' } : b)),
           }));
           log(admin, 'card_to_card.approved', `رسید تراکنش ${tx.id} تأیید شد.`);
-          emit(tx.userId, 'payment_approved', { packageTitle: s.packages.find((p) => p.id === tx.packageId)?.title }, '/portal/');
+          emit(tx.userId, 'payment_approved', { packageTitle: s.packages.find((p) => p.id === tx.packageId)?.title }, '/portal');
           for (const id of heldIds) {
             const b = s.bookings.find((x) => x.id === id)!;
             const slot = s.slots.find((x) => x.id === b.slotId)!;
-            emit(tx.userId, 'booking_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId), cutoffHours: s.settings.modificationCutoffHours }, '/portal/');
+            emit(tx.userId, 'booking_confirmed', { slot, coach: s.coaches.find((c) => c.id === slot.coachId), cutoffHours: s.settings.modificationCutoffHours }, '/portal');
           }
         },
         rejectTransaction: (transactionId, reason) => {
@@ -324,7 +336,7 @@ export const useStore = create<AppState>()(
             bookings: st.bookings.map((b) => (b.membershipId === tx.membershipId && b.status === 'pending_verification' ? { ...b, status: 'cancelled_by_studio', cancellationReason: reason } : b)),
           }));
           log(admin, 'card_to_card.rejected', `رسید تراکنش ${tx.id} رد شد: ${reason}`);
-          emit(tx.userId, 'payment_rejected', { reason }, '/portal/');
+          emit(tx.userId, 'payment_rejected', { reason }, '/portal');
         },
         reviewAssessment: (assessmentId, level, note) => {
           const s = getState();
@@ -348,11 +360,7 @@ export const useStore = create<AppState>()(
       storage: createJSONStorage(() => idbStorage),
       skipHydration: true,
       version: SEED_VERSION,
-      partialize: (s) => ({
-        seedVersion: s.seedVersion, seededAt: s.seededAt, users: s.users, coaches: s.coaches, packages: s.packages, settings: s.settings, slots: s.slots, memberships: s.memberships,
-        bookings: s.bookings, transactions: s.transactions, healthAssessments: s.healthAssessments, notifications: s.notifications, audit: s.audit,
-        clockOffsetMs: s.clockOffsetMs, numerals: s.numerals, sessionUserId: s.sessionUserId, checkout: s.checkout, intakeDraft: s.intakeDraft, lastCheckout: s.lastCheckout,
-      }) as unknown as AppState,
+      partialize: (s) => partialize(s) as unknown as AppState,
     },
   ),
 );

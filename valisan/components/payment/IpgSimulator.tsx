@@ -25,7 +25,7 @@ export function IpgSimulator() {
   useEffect(() => { const id = setInterval(() => setLeft((s) => Math.max(0, s - 1)), 1000); return () => clearInterval(id); }, []);
 
   if (!hydrated || txId === null) return <GuardSkeleton />;
-  if (!tx) return <div className="container-x py-24 text-center text-muted">تراکنش یافت نشد.<div className="mt-4"><Button href="/pricing/" variant="ghost">بازگشت</Button></div></div>;
+  if (!tx) return <div className="container-x py-24 text-center text-muted">تراکنش یافت نشد.<div className="mt-4"><Button href="/pricing" variant="ghost">بازگشت</Button></div></div>;
 
   const finish = (outcome: 'success' | IpgFailure) => {
     setBusy(outcome);

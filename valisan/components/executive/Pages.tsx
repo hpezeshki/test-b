@@ -61,7 +61,7 @@ export function Overview() {
               <li key={p.id}><div className="flex items-center justify-between text-[13px]"><span>{p.title}</span><span className="tabular text-muted">{f.s(n)}</span></div><div className="mt-1 h-1.5 rounded-full bg-border"><div className="h-full rounded-full bg-brand-300" style={{ width: `${(n / Math.max(1, ...byPkg.map((x) => x.n))) * 100}%` }} /></div></li>
             ))}
           </ul>
-          <Button href="/executive/queue/" className="mt-6" full variant={pending.length ? 'primary' : 'ghost'}>{pending.length ? `بررسی ${f.s(pending.length)} رسید در انتظار` : 'صف بررسی خالی است'}</Button>
+          <Button href="/executive/queue" className="mt-6" full variant={pending.length ? 'primary' : 'ghost'}>{pending.length ? `بررسی ${f.s(pending.length)} رسید در انتظار` : 'صف بررسی خالی است'}</Button>
         </Card>
       </div>
     </ExecutiveShell>

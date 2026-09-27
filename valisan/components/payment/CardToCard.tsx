@@ -62,7 +62,7 @@ export function CardToCard() {
   ];
 
   return (
-    <RoleGuard allow={['student', 'super_admin']} next="/pay/card/">
+    <RoleGuard allow={['student', 'super_admin']} next="/pay/card">
       <section className="container-x py-12">
         <div className="mx-auto max-w-3xl">
           <div className="mb-6"><div className="eyebrow">Card to card</div><h1 className="mt-1 text-[28px] font-light">پرداخت کارت به کارت</h1><p className="mt-1 text-[13.5px] text-muted">مبلغ را به کارت استودیو منتقل کنید، شماره پیگیری را وارد و تصویر رسید را بارگذاری کنید. پس از بررسی مدیریت، عضویت شما فعال می‌شود.</p></div>

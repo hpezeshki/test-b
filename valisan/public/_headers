@@ -1,3 +1,8 @@
+# Next.js client-side navigation fetches the RSC payload (*.txt) and requires this MIME type;
+# without it the router falls back to a hard navigation that shows the raw payload.
+/*.txt
+  Content-Type: text/x-component; charset=utf-8
+  Cache-Control: public, max-age=0, must-revalidate
 /fonts/*
   Cache-Control: public, max-age=31536000, immutable
 /_next/static/*

@@ -10,7 +10,7 @@ Everything runs in the browser against a persistent mock engine — **no backend
 | Stack | Next.js 15 (App Router, `output: 'export'`) · TypeScript · Tailwind CSS v4 · Lucide · Zustand (persist) → IndexedDB (`idb-keyval`) · `jalaali-js` |
 | Fonts | Self-hosted Vazirmatn (variable) + Cormorant Garamond — no Google Fonts dependency |
 | Tests | Vitest for the scheduling / Jalali / seed engine (`npm test`) |
-| Hosting | Cloudflare Pages (primary) + GitHub Pages mirror via `.github/workflows/deploy.yml` |
+| Hosting | Netlify (`netlify.toml`) or Cloudflare Pages (`.github/workflows/deploy.yml`) — any host with clean URLs |
 
 ## Run locally
 
@@ -18,7 +18,7 @@ Everything runs in the browser against a persistent mock engine — **no backend
 npm ci
 npm run dev        # http://localhost:3000
 npm run build      # static export → ./out
-npx serve out      # preview the export
+npm start          # preview the export with clean URLs on :4173
 ```
 
 ## Demo accounts (one tap on the login page)
@@ -40,6 +40,11 @@ npx serve out      # preview the export
 7. Switch to **super-admin** → `/executive/queue/` → approve / reject with reason → switch back to see the SMS.
 8. **Coach portal** shows the new attendee and updated seat count.
 9. Executive header: **fast-forward clock** (30 min / 1 day) to watch the 2-hour reminder fire; **بازنشانی** re-seeds the demo world.
+
+## Hosting notes
+
+- **Netlify**: connect the repo; `netlify.toml` sets the build, the SPA fallback and — critically — serves `*.txt` RSC payloads as `text/x-component`. Without that header Next's client router hard-navigates to the raw `.txt` payload on link clicks.
+- The export uses `trailingSlash: false`, so the host must map `/pricing` → `pricing.html` (Netlify and Cloudflare Pages do; plain GitHub Pages does not).
 
 ## Cloudflare Pages settings
 

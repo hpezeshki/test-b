@@ -24,7 +24,7 @@ export function AssessmentStep({ slug }: { slug: string }) {
   const f = useFmt();
   useEffect(() => { if (hydrated && pkg) startCheckout(pkg.slug); }, [hydrated, pkg, startCheckout]);
   if (!pkg) return <NotFound />;
-  const go = () => router.push(`/join/${pkg.slug}/schedule/`);
+  const go = () => router.push(`/join/${pkg.slug}/schedule`);
   return (
     <FunnelShell pkg={pkg} step={1} aside={<PackageSummary pkg={pkg} />}>
       <div className="mb-6"><div className="eyebrow">Health Intake</div><h1 className="mt-1 text-[28px] font-light">فرم ارزیابی سلامت و سبک زندگی</h1></div>
@@ -67,8 +67,8 @@ export function ScheduleStep({ slug }: { slug: string }) {
       <div className="mb-6"><div className="eyebrow">Schedule</div><h1 className="mt-1 text-[28px] font-light">{pkg.kind === 'drop_in' ? 'زمان جلسه را انتخاب کنید' : 'زمان اولین جلسه را انتخاب کنید'}</h1><p className="mt-1 text-[13px] text-muted">{pkg.kind === 'drop_in' ? 'یک جلسه‌ی ۶۰ دقیقه‌ای.' : 'جلسات بعدی را پس از فعال‌شدن عضویت از پنل خود رزرو می‌کنید.'}</p></div>
       <SlotPicker selectedId={checkout?.slotId} onSelect={(s) => setSlot(s.id)} userId={user?.id} initialCoachId={user?.assignedCoachIds[0]} />
       <div className="mt-8 flex justify-between">
-        <Button variant="ghost" href={`/join/${pkg.slug}/assessment/`}>مرحله قبل</Button>
-        <Button disabled={!selected} onClick={() => router.push(`/join/${pkg.slug}/checkout/`)}>ادامه به پرداخت <ArrowLeft size={16} /></Button>
+        <Button variant="ghost" href={`/join/${pkg.slug}/assessment`}>مرحله قبل</Button>
+        <Button disabled={!selected} onClick={() => router.push(`/join/${pkg.slug}/checkout`)}>ادامه به پرداخت <ArrowLeft size={16} /></Button>
       </div>
     </FunnelShell>
   );
@@ -91,13 +91,13 @@ export function CheckoutStep({ slug }: { slug: string }) {
     setBusy(true);
     if (track === 'ipg') {
       const tx = beginIpg();
-      setTimeout(() => router.push(tx ? `/pay/ipg/?tx=${tx.id}&pkg=${pkg.slug}` : `/join/${pkg.slug}/checkout/`), 500);
-    } else setTimeout(() => router.push(`/pay/card/?pkg=${pkg.slug}`), 300);
+      setTimeout(() => router.push(tx ? `/pay/ipg?tx=${tx.id}&pkg=${pkg.slug}` : `/join/${pkg.slug}/checkout`), 500);
+    } else setTimeout(() => router.push(`/pay/card?pkg=${pkg.slug}`), 300);
   };
   return (
     <FunnelShell pkg={pkg} step={3} aside={<PackageSummary pkg={pkg} slotLine={selected ? <><div className="font-medium">{f.dt(selected.startsAt)}</div><div className="text-muted">{coach?.displayName}</div></> : undefined} />}>
       <div className="mb-6"><div className="eyebrow">Checkout</div><h1 className="mt-1 text-[28px] font-light">روش پرداخت</h1></div>
-      {!selected && <div className="mb-4 rounded-[var(--radius-md)] border border-warning/50 bg-warning/10 p-4 text-[13.5px]">هنوز زمانی انتخاب نکرده‌اید. <Button href={`/join/${pkg.slug}/schedule/`} size="sm" variant="ghost">انتخاب زمان</Button></div>}
+      {!selected && <div className="mb-4 rounded-[var(--radius-md)] border border-warning/50 bg-warning/10 p-4 text-[13.5px]">هنوز زمانی انتخاب نکرده‌اید. <Button href={`/join/${pkg.slug}/schedule`} size="sm" variant="ghost">انتخاب زمان</Button></div>}
       <div className="grid gap-4 md:grid-cols-2">
         <TrackCard active={track === 'ipg'} onClick={() => setTrack('ipg')} icon={<CreditCard size={22} />} title="پرداخت آنلاین" desc="درگاه بانکی (زرین‌پال) · فعال‌سازی آنی عضویت" badge={<Badge tone="success" dot>آنی</Badge>} />
         <TrackCard active={track === 'card_to_card'} onClick={() => setTrack('card_to_card')} icon={<Landmark size={22} />} title="کارت به کارت" desc="انتقال به کارت استودیو و ثبت رسید · فعال‌سازی پس از تأیید" badge={<Badge tone="warning" dot>پس از تأیید</Badge>} />
@@ -106,7 +106,7 @@ export function CheckoutStep({ slug }: { slug: string }) {
         <div className="flex items-center justify-between text-[14px]"><span className="text-ink-2">{pkg.title}</span><span className="tabular">{f.toman(pkg.priceToman)}</span></div>
         {pkg.compareAtToman && <div className="mt-1 flex items-center justify-between text-[13px] text-success"><span>تخفیف عضویت</span><span className="tabular">− {f.toman(pkg.compareAtToman - pkg.priceToman)}</span></div>}
         <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-[16px] font-medium"><span>مبلغ نهایی</span><span className="tabular">{f.toman(pkg.priceToman)}</span></div>
-        <p className="mt-4 text-[12px] leading-6 text-muted">با ادامه، <a className="text-brand-700 underline" href="/faq/">قوانین لغو و جابه‌جایی</a> والیسان را می‌پذیرید: تغییر جلسه تا ۴ ساعت پیش از شروع امکان‌پذیر است.</p>
+        <p className="mt-4 text-[12px] leading-6 text-muted">با ادامه، <a className="text-brand-700 underline" href="/faq">قوانین لغو و جابه‌جایی</a> والیسان را می‌پذیرید: تغییر جلسه تا ۴ ساعت پیش از شروع امکان‌پذیر است.</p>
         <Button className="mt-5" full size="lg" loading={busy} disabled={!selected} onClick={pay}>{track === 'ipg' ? 'انتقال به درگاه پرداخت' : 'ادامه با کارت به کارت'} <ArrowLeft size={18} /></Button>
       </Card>
     </FunnelShell>
@@ -155,7 +155,7 @@ export function DoneStep({ slug }: { slug: string }) {
           </div>
         )}
         <div className="mt-7 flex flex-wrap justify-center gap-3">
-          {ok || pending ? <Button href="/portal/">رفتن به پنل هنرجو <ArrowLeft size={16} /></Button> : <><Button href={`/join/${pkg.slug}/checkout/`}>تلاش مجدد</Button><Button href="/pay/card/" variant="ghost">کارت به کارت</Button></>}
+          {ok || pending ? <Button href="/portal">رفتن به پنل هنرجو <ArrowLeft size={16} /></Button> : <><Button href={`/join/${pkg.slug}/checkout`}>تلاش مجدد</Button><Button href="/pay/card" variant="ghost">کارت به کارت</Button></>}
         </div>
       </Card>
     </FunnelShell>

@@ -25,7 +25,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export function Button({ variant = 'primary', size = 'md', href, loading, full, className, children, ...rest }: ButtonProps) {
   const cls = cn(base, variants[variant], sizes[size], full && 'w-full', className);
-  if (href) return <Link href={href} className={cls} aria-disabled={rest.disabled}>{children}</Link>;
+  if (href) return <Link href={href} prefetch={false} className={cls} aria-disabled={rest.disabled}>{children}</Link>;
   return (
     <button className={cls} disabled={rest.disabled || loading} {...rest}>
       {loading ? <span className="dots" aria-label="در حال انجام"><span /><span /><span /></span> : children}

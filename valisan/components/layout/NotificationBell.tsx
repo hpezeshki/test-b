@@ -39,7 +39,7 @@ export function NotificationBell() {
             {mine.length === 0 && <li className="p-6 text-center text-[13px] text-muted">اعلانی ندارید.</li>}
             {mine.map((n) => (
               <li key={n.id} className={cn('border-b border-border/70 px-4 py-3 last:border-0', !n.readAt && 'bg-brand-50/50')}>
-                <Link href={n.deepLink ?? '#'} onClick={() => setOpen(false)} className="block">
+                <Link prefetch={false} href={n.deepLink ?? '#'} onClick={() => setOpen(false)} className="block">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[12px] text-brand-700">{NOTIFICATION_KIND_LABEL[n.kind]}</span>
                     <span className="text-[11px] text-muted">{f.rel(n.createdAt, now)}</span>

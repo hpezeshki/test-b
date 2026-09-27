@@ -1,0 +1,2 @@
+# Netlify: serve the pre-rendered home for unknown routes; real files (pages, RSC .txt payloads, assets) always win.
+/*  /index.html  200

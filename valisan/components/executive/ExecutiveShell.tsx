@@ -8,13 +8,13 @@ import { useFmt, useNow } from '@/lib/hooks';
 import { cn } from '@/lib/cn';
 
 const NAV = [
-  { href: '/executive/', label: 'نمای کلی', icon: LayoutDashboard },
-  { href: '/executive/queue/', label: 'صف بررسی رسیدها', icon: ReceiptText, badge: true },
-  { href: '/executive/ledger/', label: 'دفتر مالی', icon: Activity },
-  { href: '/executive/users/', label: 'کاربران', icon: Users },
-  { href: '/executive/health/', label: 'پرونده‌های سلامت', icon: FileHeart },
-  { href: '/executive/settings/', label: 'تنظیمات', icon: Settings2 },
-  { href: '/executive/audit/', label: 'گزارش و پیامک‌ها', icon: ScrollText },
+  { href: '/executive', label: 'نمای کلی', icon: LayoutDashboard },
+  { href: '/executive/queue', label: 'صف بررسی رسیدها', icon: ReceiptText, badge: true },
+  { href: '/executive/ledger', label: 'دفتر مالی', icon: Activity },
+  { href: '/executive/users', label: 'کاربران', icon: Users },
+  { href: '/executive/health', label: 'پرونده‌های سلامت', icon: FileHeart },
+  { href: '/executive/settings', label: 'تنظیمات', icon: Settings2 },
+  { href: '/executive/audit', label: 'گزارش و پیامک‌ها', icon: ScrollText },
 ];
 
 export function ExecutiveShell({ title, children, actions }: { title: string; children: React.ReactNode; actions?: React.ReactNode }) {
@@ -25,7 +25,7 @@ export function ExecutiveShell({ title, children, actions }: { title: string; ch
   const f = useFmt();
   const now = useNow(1000);
   return (
-    <RoleGuard allow={['super_admin']} next={pathname ?? '/executive/'}>
+    <RoleGuard allow={['super_admin']} next={pathname ?? '/executive'}>
       <section className="container-x py-8 md:py-10">
         <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
           <div><div className="eyebrow">Executive Suite · Restricted</div><h1 className="mt-1 text-[26px] font-light md:text-[30px]">{title}</h1></div>
@@ -42,7 +42,7 @@ export function ExecutiveShell({ title, children, actions }: { title: string; ch
             {NAV.map((n) => {
               const active = pathname === n.href;
               return (
-                <Link key={n.href} href={n.href} className={cn('flex shrink-0 items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2.5 text-[13.5px] transition-colors', active ? 'bg-ink text-on-brand' : 'text-ink-2 hover:bg-brand-50')}>
+                <Link prefetch={false} key={n.href} href={n.href} className={cn('flex shrink-0 items-center gap-2 rounded-[var(--radius-sm)] px-3 py-2.5 text-[13.5px] transition-colors', active ? 'bg-ink text-on-brand' : 'text-ink-2 hover:bg-brand-50')}>
                   <n.icon size={16} /> {n.label}
                   {n.badge && pending > 0 && <span className={cn('ms-auto rounded-full px-1.5 text-[11px] tabular', active ? 'bg-brand-300 text-ink' : 'bg-warning/20 text-[#9A6F1E]')}>{f.s(pending)}</span>}
                 </Link>

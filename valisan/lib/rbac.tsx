@@ -17,7 +17,7 @@ export function RoleGuard({ allow, children, next }: { allow: Role[]; children: 
   const user = useSessionUser();
   const router = useRouter();
   useEffect(() => {
-    if (hydrated && !user) router.replace(`/login/?next=${encodeURIComponent(next)}`);
+    if (hydrated && !user) router.replace(`/login?next=${encodeURIComponent(next)}`);
   }, [hydrated, user, router, next]);
 
   if (!hydrated || !user) return <GuardSkeleton />;
@@ -45,7 +45,7 @@ function Forbidden({ role }: { role: Role }) {
         <p className="text-ink-2">این بخش برای نقش «{ROLE_LABEL[role]}» در دسترس نیست. این تلاش در گزارش امنیتی ثبت شد.</p>
         <div className="flex justify-center gap-3 pt-2">
           <Button href="/" variant="ghost">بازگشت به خانه</Button>
-          <Button onClick={logout} variant="secondary">خروج و ورود با حساب دیگر</Button>
+          <Button onClick={() => { void logout(); }} variant="secondary">خروج و ورود با حساب دیگر</Button>
         </div>
       </div>
     </div>

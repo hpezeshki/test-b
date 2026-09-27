@@ -14,7 +14,7 @@ export function Article({ post }: { post: BlogPost }) {
   const related = POSTS.filter((p) => p.category === post.category && p.slug !== post.slug).slice(0, 2);
   return (
     <article className="container-x py-14">
-      <Link href="/blog/" className="inline-flex items-center gap-1 text-[13px] text-muted hover:text-ink"><ArrowRight size={14} /> مجله سلامت</Link>
+      <Link prefetch={false} href="/blog" className="inline-flex items-center gap-1 text-[13px] text-muted hover:text-ink"><ArrowRight size={14} /> مجله سلامت</Link>
       <header className="mx-auto mt-6 max-w-3xl text-center">
         <Badge tone="brand">{BLOG_CATEGORY_LABEL[post.category]}</Badge>
         <h1 className="mt-4 text-[30px] font-light leading-[1.35] md:text-[40px]">{post.title}</h1>

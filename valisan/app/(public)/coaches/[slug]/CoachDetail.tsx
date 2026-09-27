@@ -24,7 +24,7 @@ export function CoachDetail({ coach }: { coach: Coach }) {
             </div>
             <div className="mt-4 flex flex-wrap justify-center gap-1.5">{coach.modalities.map((m) => <Badge key={m} tone="brand">{MODALITY_LABEL[m]}</Badge>)}</div>
             <div className="mt-5">{coach.isAcceptingNewClients ? <Badge tone="success" dot>پذیرش هنرجوی جدید</Badge> : <Badge tone="warning" dot>لیست انتظار</Badge>}</div>
-            <Button href="/pricing/" className="mt-6" full>رزرو جلسه با {coach.displayName.split(' ')[0]}</Button>
+            <Button href="/pricing" className="mt-6" full>رزرو جلسه با {coach.displayName.split(' ')[0]}</Button>
             </div>
           </Card>
           <Card className="p-6">

@@ -20,8 +20,8 @@ export function Footer() {
         </div>
         <div className="space-y-2 text-[14px]">
           <div className="mb-3 font-medium">دسترسی سریع</div>
-          {[['/about/', 'درباره استودیو'], ['/classes/', 'کلاس‌ها'], ['/coaches/', 'مربیان'], ['/pricing/', 'عضویت و قیمت‌ها'], ['/faq/', 'پرسش‌های متداول'], ['/blog/', 'مجله سلامت']].map(([h, l]) => (
-            <Link key={h} href={h} className="block text-ink-2 hover:text-brand-700">{l}</Link>
+          {[['/about', 'درباره استودیو'], ['/classes', 'کلاس‌ها'], ['/coaches', 'مربیان'], ['/pricing', 'عضویت و قیمت‌ها'], ['/faq', 'پرسش‌های متداول'], ['/blog', 'مجله سلامت']].map(([h, l]) => (
+            <Link prefetch={false} key={h} href={h} className="block text-ink-2 hover:text-brand-700">{l}</Link>
           ))}
         </div>
         <div className="space-y-3 text-[14px] text-ink-2">

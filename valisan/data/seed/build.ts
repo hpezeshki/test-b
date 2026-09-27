@@ -115,9 +115,9 @@ export function buildSeed(now: Date): SeedState {
   const orig = addBooking(demo.id, demoMem, origSlot, 'rescheduled', addDays(now, -3), { rescheduledToBookingId: bNext.id });
   bNext.rescheduledFromBookingId = orig.id;
 
-  notify(demo.id, 'booking_confirmed', { slot: nextC, coach: coachC1, cutoffHours: 4 }, addDays(now, -1), false, '/portal/');
-  notify(demo.id, 'reschedule_confirmed', { slot: nextB, coach: coachC1 }, addDays(now, -2), true, '/portal/');
-  notify(demo.id, 'booking_confirmed', { slot: soon, coach: coachC1, cutoffHours: 4 }, addDays(now, -1), true, '/portal/');
+  notify(demo.id, 'booking_confirmed', { slot: nextC, coach: coachC1, cutoffHours: 4 }, addDays(now, -1), false, '/portal');
+  notify(demo.id, 'reschedule_confirmed', { slot: nextB, coach: coachC1 }, addDays(now, -2), true, '/portal');
+  notify(demo.id, 'booking_confirmed', { slot: soon, coach: coachC1, cutoffHours: 4 }, addDays(now, -1), true, '/portal');
   if (pastC1[3]) notify(demo.id, 'class_reminder_2h', { slot: pastC1[3], coach: coachC1 }, addMinutes(new Date(pastC1[3].startsAt), -120), true);
   notify(demo.id, 'payment_approved', { packageTitle: p12.title }, addMinutes(demoStart, 2), true);
 
