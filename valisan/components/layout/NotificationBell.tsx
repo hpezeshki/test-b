@@ -25,12 +25,12 @@ export function NotificationBell() {
   if (!userId) return null;
   return (
     <div className="relative" ref={ref}>
-      <button onClick={() => setOpen((o) => !o)} className="relative grid size-10 place-items-center rounded-full hover:bg-brand-50" aria-label="اعلان‌ها">
+      <button onClick={() => setOpen((o) => !o)} className="press relative grid size-11 place-items-center rounded-full hover:bg-brand-50 md:size-10" aria-label="اعلان‌ها">
         <Bell size={19} />
-        {unread > 0 && <span className="absolute -top-0.5 -end-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-brand-500 px-1 text-[11px] font-medium text-on-brand">{f.s(unread)}</span>}
+        {unread > 0 && <span className="absolute -top-0.5 -end-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-gradient-to-br from-brand-500 to-lilac-500 px-1 text-[11px] font-medium text-on-brand shadow-brand">{f.s(unread)}</span>}
       </button>
       {open && (
-        <div className="fade-up absolute end-0 top-12 z-40 w-[min(92vw,360px)] overflow-hidden rounded-[var(--radius-lg)] border border-border bg-surface shadow-lg">
+        <div className="fade-up glass-strong absolute end-0 top-12 z-40 w-[min(92vw,360px)] overflow-hidden rounded-[var(--radius-lg)]">
           <div className="flex items-center justify-between border-b border-border px-4 py-3">
             <div className="font-medium">اعلان‌ها</div>
             {unread > 0 && <button onClick={markRead} className="flex items-center gap-1 text-[12px] text-brand-700 hover:underline"><CheckCheck size={14} /> خواندن همه</button>}

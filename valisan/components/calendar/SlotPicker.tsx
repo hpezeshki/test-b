@@ -82,8 +82,8 @@ export function SlotPicker({ selectedId, onSelect, minStart, maxDate, initialCoa
                 const disabled = full || mine;
                 return (
                   <button key={s.id} type="button" disabled={disabled} onClick={() => onSelect(s)} aria-pressed={sel}
-                    className={cn('group relative rounded-[var(--radius-md)] border p-3 text-start transition-all duration-200',
-                      sel ? 'border-brand-300 bg-brand-100/70 shadow-brand' : 'border-border bg-surface hover:border-brand-300 hover:bg-brand-50/60',
+                    className={cn('press group relative min-h-[76px] rounded-[var(--radius-md)] border p-3.5 text-start transition-all duration-200',
+                      sel ? 'border-brand-300 bg-gradient-to-br from-brand-100 to-brand-50 shadow-glow' : 'border-border bg-white/70 hover:border-brand-300 hover:bg-brand-50/60',
                       full && 'bg-surface-2 text-muted cursor-not-allowed hover:border-border hover:bg-surface-2',
                       mine && 'border-success/40 bg-success/5 cursor-default',
                       !full && !mine && left === 1 && !sel && 'border-warning/60')}>

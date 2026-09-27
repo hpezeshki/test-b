@@ -19,7 +19,7 @@ export const COACHES: Coach[] = [
       { weekday: 3, windows: [{ start: '16:00', end: '20:00' }], sessionType: 'private', modality: 'corrective', room: 'اتاق خصوصی' },
       { weekday: 5, windows: [{ start: '10:00', end: '13:00' }], sessionType: 'semi_private', modality: 'pilates_reformer', room: 'استودیو ریفرمر' },
     ],
-    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 4.9, yearsExperience: 11, isAcceptingNewClients: true, accent: '10',
+    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 4.9, yearsExperience: 11, isAcceptingNewClients: true, accent: '300',
   },
   {
     id: 'c2', userId: 'u_coach2', slug: 'niloufar-rahimi', displayName: 'نیلوفر رحیمی', title: 'مربی پیلاتس مت و حرکات اصلاحی',
@@ -38,7 +38,7 @@ export const COACHES: Coach[] = [
       { weekday: 4, windows: [{ start: '17:00', end: '20:00' }], sessionType: 'group', modality: 'pilates_mat', room: 'استودیو مت' },
       { weekday: 5, windows: [{ start: '17:00', end: '19:00' }], sessionType: 'group', modality: 'mobility', room: 'استودیو مت' },
     ],
-    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 4.8, yearsExperience: 8, isAcceptingNewClients: true, accent: '354',
+    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 4.8, yearsExperience: 8, isAcceptingNewClients: true, accent: '280',
   },
   {
     id: 'c3', userId: 'u_coach3', slug: 'mahsa-karimi', displayName: 'مهسا کریمی', title: 'مربی هاتا و وینیاسا یوگا',
@@ -56,7 +56,7 @@ export const COACHES: Coach[] = [
       { weekday: 0, windows: [{ start: '18:00', end: '20:00' }], sessionType: 'group', modality: 'yoga_vinyasa', room: 'لافت یوگا' },
       { weekday: 2, windows: [{ start: '18:00', end: '20:00' }], sessionType: 'group', modality: 'yoga_hatha', room: 'لافت یوگا' },
     ],
-    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 5.0, yearsExperience: 9, isAcceptingNewClients: true, accent: '39',
+    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 5.0, yearsExperience: 9, isAcceptingNewClients: true, accent: '320',
   },
   {
     id: 'c4', userId: 'u_coach4', slug: 'elham-sadeghi', displayName: 'الهام صادقی', title: 'متخصص بازتوانی پس از زایمان و موبیلیتی',
@@ -75,6 +75,6 @@ export const COACHES: Coach[] = [
       { weekday: 4, windows: [{ start: '11:00', end: '14:00' }], sessionType: 'private', modality: 'postpartum', room: 'اتاق خصوصی' },
       { weekday: 5, windows: [{ start: '09:00', end: '12:00' }], sessionType: 'semi_private', modality: 'mobility', room: 'استودیو مت' },
     ],
-    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 4.9, yearsExperience: 7, isAcceptingNewClients: false, accent: '25',
+    capacity: { private: 1, semi_private: 3, group: 6 }, rating: 4.9, yearsExperience: 7, isAcceptingNewClients: false, accent: '255',
   },
 ];

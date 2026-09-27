@@ -15,10 +15,11 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute -top-32 -end-32 size-[520px] rounded-full bg-brand-100/70 blur-3xl" />
-        <div className="absolute top-1/2 -start-40 size-[420px] rounded-full bg-gold-400/15 blur-3xl" />
+        <div className="absolute -top-32 -end-32 size-[520px] rounded-full bg-brand-300/45 blur-3xl" />
+        <div className="absolute top-1/2 -start-40 size-[460px] rounded-full bg-lilac-300/50 blur-3xl" />
+        <div className="absolute bottom-0 end-1/3 size-[320px] rounded-full bg-brand-100/60 blur-3xl" />
       </div>
-      <div className="container-x grid items-center gap-12 py-16 md:py-24 lg:grid-cols-2 lg:py-28">
+      <div className="container-x grid items-center gap-10 py-12 md:py-24 lg:grid-cols-2 lg:py-28">
         <div className="space-y-7 fade-up">
           <div className="eyebrow">Pilates · Yoga · Wellness</div>
           <h1 className="text-[40px] leading-[1.15] font-light md:text-[56px] lg:text-[64px]">بازگشت به بدن،<br />در سکوتِ <span className="text-brand-500">والیسان</span></h1>
@@ -41,7 +42,7 @@ export function Hero() {
             </div>
           </Photo>
           <div className="glass absolute -bottom-5 -start-3 flex items-center gap-3 rounded-[var(--radius-lg)] p-3 pe-5 shadow-lg md:-start-8">
-            <Photo srcs={IMAGES.heroThumb} alt="" hover={false} className="size-14 rounded-[var(--radius-sm)]" hue="354" />
+            <Photo srcs={IMAGES.heroThumb} alt="" hover={false} className="size-14 rounded-[var(--radius-sm)]" hue="300" />
             <div>
               <div className="text-[12px] text-muted">جلسه بعدی خالی</div>
               <div className="mt-0.5 text-[15px] font-medium">امروز · ساعت {f.s('18:00')}</div>
@@ -80,7 +81,7 @@ export function Modalities({ limit }: { limit?: number }) {
 export function CoachRoster({ limit }: { limit?: number }) {
   const f = useFmt();
   return (
-    <section className="bg-surface-2/60 py-20">
+    <section className="bg-lilac-100/50 py-20">
       <div className="container-x">
         <SectionHeading eyebrow="The Team" title="مربیان والیسان" desc="مدرک بین‌المللی، سال‌ها تجربه و نگاهی دقیق به بدن هر هنرجو." />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -104,11 +105,11 @@ export function CoachRoster({ limit }: { limit?: number }) {
 export function PricingTable({ compact }: { compact?: boolean }) {
   const f = useFmt();
   return (
-    <section className={cn('container-x', compact ? 'py-20' : 'py-12')}>
+    <section className={cn('container-x aurora', compact ? 'py-20' : 'py-12')}>
       {compact && <SectionHeading eyebrow="Memberships" title="عضویت و قیمت‌ها" desc="بسته‌ای متناسب با ریتم زندگی خود انتخاب کنید. تمام بسته‌ها شامل مربی اختصاصی و جابه‌جایی رایگان هستند." />}
       <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
         {PACKAGES.map((p) => (
-          <div key={p.id} className={cn('card relative flex flex-col p-6 lift', p.isFeatured && 'hairline-gold shadow-brand')}>
+          <div key={p.id} className={cn('card relative flex flex-col p-6 lift', p.isFeatured && 'shadow-glow ring-1 ring-brand-300/70 bg-gradient-to-b from-white/95 to-brand-50/80')}>
             {p.isFeatured && <span className="absolute -top-3 start-5"><Badge tone="gold" dot>{p.subtitle}</Badge></span>}
             <div className="text-[13px] text-muted">{p.kind === 'drop_in' ? 'بدون تعهد' : 'عضویت ماهانه'}</div>
             <h3 className="mt-1 text-[19px] font-medium">{p.title}</h3>
@@ -118,7 +119,7 @@ export function PricingTable({ compact }: { compact?: boolean }) {
             </div>
             {p.compareAtToman && <div className="mt-1 text-[12px] text-muted line-through tabular">{f.toman(p.compareAtToman)}</div>}
             <ul className="mt-5 flex-1 space-y-2 text-[13.5px] text-ink-2">
-              {p.perks.map((x) => <li key={x} className="flex items-start gap-2"><Sparkles size={14} className="mt-1.5 shrink-0 text-gold-400" /><span>{f.s(x)}</span></li>)}
+              {p.perks.map((x) => <li key={x} className="flex items-start gap-2"><Sparkles size={14} className="mt-1.5 shrink-0 text-brand-500" /><span>{f.s(x)}</span></li>)}
             </ul>
             <Button href={`/join/${p.slug}/assessment/`} className="mt-6" variant={p.isFeatured ? 'primary' : 'secondary'} full>{p.kind === 'drop_in' ? 'رزرو جلسه تکی' : 'شروع ثبت‌نام'}</Button>
           </div>
@@ -149,7 +150,7 @@ export function Testimonials() {
 export function BlogTeaser() {
   const f = useFmt();
   return (
-    <section className="bg-surface-2/60 py-20">
+    <section className="bg-lilac-100/50 py-20">
       <div className="container-x">
         <SectionHeading eyebrow="Journal" title="مجله سلامت والیسان" desc="تغذیه، حرکات اصلاحی، ذهن‌آگاهی و ریکاوری؛ نوشته‌هایی کوتاه از تیم تخصصی ما." />
         <div className="grid gap-5 md:grid-cols-3">
@@ -199,7 +200,7 @@ export function StudioGallery() {
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {IMAGES.studio.map((srcs, i) => (
           <figure key={i} className={cn('group relative', i % 2 === 0 ? 'md:-translate-y-4' : 'md:translate-y-4')}>
-            <Photo srcs={srcs} alt={STUDIO_CAPTIONS[i]} hue={['10', '39', '354', '25'][i]} overlay="soft" className={cn('rounded-[var(--radius-lg)] ring-1 ring-border', i % 2 === 0 ? 'aspect-[3/4]' : 'aspect-[4/3]')} />
+            <Photo srcs={srcs} alt={STUDIO_CAPTIONS[i]} hue={['300', '255', '320', '280'][i]} overlay="soft" className={cn('rounded-[var(--radius-lg)] ring-1 ring-border', i % 2 === 0 ? 'aspect-[3/4]' : 'aspect-[4/3]')} />
             <figcaption className="pointer-events-none absolute bottom-3 start-3 rounded-full bg-surface/85 px-3 py-1 text-[12px] backdrop-blur">{STUDIO_CAPTIONS[i]}</figcaption>
           </figure>
         ))}

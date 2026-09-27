@@ -19,7 +19,7 @@ export function FunnelShell({ pkg, step, children, aside }: { pkg: Package; step
             return (
               <li key={s} className="flex flex-1 items-center gap-2">
                 <div className="flex items-center gap-2">
-                  <span className={cn('grid size-7 shrink-0 place-items-center rounded-full text-[12px] tabular transition-colors', state === 'done' && 'bg-brand-300 text-ink', state === 'current' && 'bg-ink text-on-brand ring-2 ring-gold-400 ring-offset-2 ring-offset-bg', state === 'todo' && 'border border-border-strong text-muted')}>{state === 'done' ? <Check size={14} /> : f.s(n)}</span>
+                  <span className={cn('grid size-7 shrink-0 place-items-center rounded-full text-[12px] tabular transition-colors', state === 'done' && 'bg-gradient-to-br from-brand-300 to-brand-100 text-ink shadow-brand', state === 'current' && 'bg-ink text-on-brand ring-2 ring-brand-300 ring-offset-2 ring-offset-bg', state === 'todo' && 'border border-border-strong text-muted')}>{state === 'done' ? <Check size={14} /> : f.s(n)}</span>
                   <span className={cn('hidden text-[13px] sm:block', state === 'current' ? 'font-medium' : 'text-muted')}>{s}</span>
                 </div>
                 {i < STEPS.length - 1 && <span className={cn('h-px flex-1', n < step ? 'bg-brand-300' : 'bg-border-strong')} />}

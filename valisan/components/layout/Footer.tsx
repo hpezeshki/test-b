@@ -9,7 +9,7 @@ export function Footer() {
   const hydrated = useHydrated();
   const f = useFmt();
   return (
-    <footer className="mt-24 border-t border-border bg-surface-2/60">
+    <footer className="mt-24 border-t border-brand-300/30 bg-lilac-100/40">
       <div className="container-x grid gap-10 py-14 md:grid-cols-4">
         <div className="space-y-3 md:col-span-2">
           <div className="inline-flex flex-col items-center gap-1">

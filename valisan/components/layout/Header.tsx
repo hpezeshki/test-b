@@ -35,7 +35,7 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   return (
-    <header className={cn('sticky top-0 z-40 border-b backdrop-blur-lg backdrop-saturate-150 transition-all duration-300', scrolled || open ? 'bg-bg/85 border-gold-400/30 shadow-sm' : 'bg-bg/70 border-gold-400/15')}>
+    <header className={cn('sticky top-0 z-40 border-b backdrop-blur-lg backdrop-saturate-150 transition-all duration-300', scrolled || open ? 'bg-bg/85 border-brand-300/50 shadow-[0_8px_30px_-16px_rgba(212,119,207,0.35)]' : 'bg-bg/70 border-brand-300/25')}>
       <div className="container-x flex h-16 items-center justify-between gap-3 md:h-[72px]">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="والیسان">
           <img src="/brand/logo-v.png" alt="" className="h-9 w-auto object-contain md:h-10" />
@@ -68,14 +68,14 @@ export function Header() {
             <div className="hidden md:block"><Button href="/login/" size="sm" variant="ghost">ورود</Button></div>
           )}
           {!(hydrated && user) && <div className="hidden md:block"><Button href="/pricing/" size="sm">شروع ثبت‌نام</Button></div>}
-          <button className="grid size-10 place-items-center rounded-full hover:bg-brand-50 lg:hidden" onClick={() => setOpen((o) => !o)} aria-label="منو" aria-expanded={open}>{open ? <X size={20} /> : <Menu size={20} />}</button>
+          <button className="press grid size-11 place-items-center rounded-full hover:bg-brand-50 lg:hidden" onClick={() => setOpen((o) => !o)} aria-label="منو" aria-expanded={open}>{open ? <X size={20} /> : <Menu size={20} />}</button>
         </div>
       </div>
 
       {open && (
-        <div className="fade-up border-t border-border/70 lg:hidden">
+        <div className="fade-up border-t border-brand-300/30 lg:hidden">
           <nav className="container-x flex flex-col py-3" aria-label="موبایل">
-            {NAV.map((n) => <Link key={n.href} href={n.href} className="rounded-[var(--radius-sm)] px-3 py-3 text-[15px] hover:bg-brand-50">{n.label}</Link>)}
+            {NAV.map((n) => <Link key={n.href} href={n.href} className="press rounded-[var(--radius-sm)] px-3 py-3.5 text-[15px] hover:bg-brand-50">{n.label}</Link>)}
             <div className="my-2 h-px bg-border" />
             {hydrated && user ? (
               <>

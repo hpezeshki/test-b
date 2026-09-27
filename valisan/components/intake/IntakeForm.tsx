@@ -43,7 +43,7 @@ export function IntakeForm({ onDone }: { onDone: () => void }) {
         <Progress value={((step + 1) / STEPS.length) * 100} className="mt-2" />
       </div>
 
-      <div className="glass mb-6 flex items-start gap-3 rounded-[var(--radius-md)] p-4 text-[13px] leading-6 text-ink-2">
+      <div className="card-lilac mb-6 flex items-start gap-3 p-4 text-[13px] leading-6 text-ink-2">
         <ShieldCheck size={20} className="mt-0.5 shrink-0 text-gold-600" /><span>{REASSURANCE}</span>
       </div>
 
@@ -120,7 +120,7 @@ export function IntakeForm({ onDone }: { onDone: () => void }) {
             <Row k="استرس" v={`${f.s(d.lifestyle.stressLevel)} از ${f.s(5)}`} />
           </div>
           <label className={cn('mt-5 flex cursor-pointer items-start gap-3 rounded-[var(--radius-md)] border p-4 transition-colors', d.consentAccepted ? 'border-brand-300 bg-brand-50/60' : 'border-border-strong')}>
-            <input type="checkbox" className="mt-1 size-4 accent-[#C77B6D]" checked={d.consentAccepted} onChange={(e) => save({ consentAccepted: e.target.checked })} />
+            <input type="checkbox" className="mt-1 size-5 accent-[#D477CF]" checked={d.consentAccepted} onChange={(e) => save({ consentAccepted: e.target.checked })} />
             <span className="text-[14px] leading-7">متن محرمانگی را مطالعه کردم و می‌پذیرم که اطلاعات سلامت من صرفاً توسط کادر تخصصی والیسان برای شخصی‌سازی تمرین بررسی شود.</span>
           </label>
         </Q>

@@ -21,9 +21,9 @@ export function BookingCard({ booking, slot, coach, settings, now, onReschedule,
   const past = booking.status === 'attended' || booking.status === 'no_show';
   const cancelled = booking.status.startsWith('cancelled') || booking.status === 'rescheduled';
   return (
-    <div className={cn('card p-4 md:p-5 transition-all', today && upcoming && 'hairline-gold glass', past && 'bg-surface-2/70 opacity-80', cancelled && 'opacity-60', booking.status === 'pending_verification' && 'border-s-4 border-s-warning')}>
+    <div className={cn('card p-4 md:p-5 transition-all', today && upcoming && 'glass ring-1 ring-brand-300/70 shadow-glow', past && 'bg-surface-2/70 opacity-80', cancelled && 'opacity-60', booking.status === 'pending_verification' && 'border-s-4 border-s-warning')}>
       <div className="flex items-start gap-4">
-        <div className="grid w-16 shrink-0 place-items-center rounded-[var(--radius-md)] bg-brand-50 py-2 text-center">
+        <div className="grid w-16 shrink-0 place-items-center rounded-[var(--radius-md)] bg-gradient-to-b from-brand-50 to-lilac-100 py-2 text-center">
           <div className="text-[11px] text-muted">{f.d(start, 'weekday').split(' ')[0]}</div>
           <div className="text-[22px] font-medium leading-none tabular">{f.d(start, 'dayMonth').split(' ')[0]}</div>
           <div className="text-[11px] text-muted">{f.d(start, 'dayMonth').split(' ')[1]}</div>

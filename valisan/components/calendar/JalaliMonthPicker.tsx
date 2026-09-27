@@ -44,9 +44,9 @@ export function JalaliMonthPicker({ value, onChange, now, minDate, maxDate, week
   return (
     <div className={cn('select-none', compact ? 'text-[13px]' : 'text-[14px]')}>
       <div className="mb-3 flex items-center justify-between">
-        <button type="button" onClick={() => shift(-1)} disabled={!canPrev} className="grid size-9 place-items-center rounded-full hover:bg-brand-50 disabled:opacity-30" aria-label="ماه قبل"><ChevronRight size={18} /></button>
+        <button type="button" onClick={() => shift(-1)} disabled={!canPrev} className="press grid size-11 place-items-center rounded-full hover:bg-brand-50 disabled:opacity-30 md:size-9" aria-label="ماه قبل"><ChevronRight size={18} /></button>
         <div className="font-medium">{MONTHS[view.jm - 1]} <span className="tabular text-muted">{f.s(view.jy)}</span></div>
-        <button type="button" onClick={() => shift(1)} disabled={!canNext} className="grid size-9 place-items-center rounded-full hover:bg-brand-50 disabled:opacity-30" aria-label="ماه بعد"><ChevronLeft size={18} /></button>
+        <button type="button" onClick={() => shift(1)} disabled={!canNext} className="press grid size-11 place-items-center rounded-full hover:bg-brand-50 disabled:opacity-30 md:size-9" aria-label="ماه بعد"><ChevronLeft size={18} /></button>
       </div>
       <div className="grid grid-cols-7 gap-1 text-center text-[12px] text-muted">
         {WEEKDAYS_SHORT.map((w, i) => <div key={w} className={cn('py-1', weekend.includes(i as Weekday) && 'text-brand-500')}>{w}</div>)}
@@ -62,11 +62,11 @@ export function JalaliMonthPicker({ value, onChange, now, minDate, maxDate, week
           const disabled = isPast || isWeekend;
           return (
             <button key={i} type="button" role="gridcell" aria-selected={isSel} disabled={disabled} onClick={() => onChange(d)} title={m.holiday}
-              className={cn('relative aspect-square rounded-[var(--radius-sm)] transition-all duration-200 tabular',
-                disabled ? 'text-muted/50' : 'hover:bg-brand-50',
+              className={cn('press relative aspect-square rounded-[var(--radius-sm)] transition-all duration-200 tabular',
+                disabled ? 'text-muted/50' : 'hover:bg-brand-50 hover:shadow-[0_0_0_1px_rgba(255,197,254,0.7)]',
                 isWeekend && !isPast && 'hatch text-brand-500/70',
                 isToday && !isSel && 'ring-1 ring-gold-400 bg-bg',
-                isSel && 'bg-brand-300 text-ink shadow-brand font-medium',
+                isSel && 'bg-gradient-to-br from-brand-300 to-brand-100 text-ink shadow-glow font-medium ring-1 ring-white/80',
                 m.holiday && !isSel && 'text-brand-700')}>
               {f.s(toJalali(d).jd)}
               {isToday && <span className="absolute bottom-1 start-1/2 -translate-x-1/2 size-1 rounded-full bg-gold-400" />}
