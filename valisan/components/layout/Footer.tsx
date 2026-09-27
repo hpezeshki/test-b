@@ -13,7 +13,7 @@ export function Footer() {
       <div className="container-x grid gap-10 py-14 md:grid-cols-4">
         <div className="space-y-3 md:col-span-2">
           <div className="inline-flex flex-col items-center gap-1">
-            <img src="/brand/logo-lockup.png" alt="VALISAN" className="h-24 w-auto object-contain md:h-28" />
+            <img src="/brand/logo-lockup.png" alt="VALISAN" className="h-24 w-auto object-contain mix-blend-multiply md:h-28" />
             <div className="eyebrow">Pilates · Yoga · Wellness</div>
           </div>
           <p className="max-w-md text-[14px] leading-7 text-ink-2">استودیوی تخصصی بانوان؛ جایی برای بازگشت به بدن، نفس و آرامش. تمرین‌های شخصی‌سازی‌شده با مربیان حرفه‌ای در فضایی آرام و خصوصی.</p>

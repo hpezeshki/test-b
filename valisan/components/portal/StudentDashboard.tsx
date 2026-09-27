@@ -1,7 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import Link from 'next/link';
-import { CalendarPlus, ClipboardCheck, Sparkles } from 'lucide-react';
+import { CalendarPlus, ClipboardCheck, Quote } from 'lucide-react';
 import { useStore } from '@/data/store';
 import { useFmt, useNow, useSessionUser } from '@/lib/hooks';
 import { RoleGuard } from '@/lib/rbac';
@@ -95,7 +95,7 @@ function Inner() {
             <>
               <div className="mt-2 flex items-center gap-2 text-[14px]"><ClipboardCheck size={16} className="text-success" /> ثبت‌شده در {f.d(assessment.submittedAt, 'weekday')}</div>
               <div className="mt-2 text-[13px] text-ink-2">سطح اعلام‌شده: {FITNESS_LEVEL_LABEL[assessment.fitnessLevel]}</div>
-              {assessment.reviewedBy && <div className="mt-2 rounded-[var(--radius-sm)] bg-brand-50 p-3 text-[12.5px] leading-6"><Sparkles size={13} className="inline text-gold-600" /> نظر کادر تخصصی: {assessment.reviewedBy.note}</div>}
+              {assessment.reviewedBy && <div className="mt-2 rounded-[var(--radius-sm)] bg-brand-50 p-3 text-[12.5px] leading-6"><Quote size={13} className="inline text-brand-700" /> نظر کادر تخصصی: {assessment.reviewedBy.note}</div>}
               <Link href={`/join/${pkg?.slug ?? 'monthly-12'}/assessment/`} className="mt-3 block text-[12px] text-brand-700 hover:underline">به‌روزرسانی پاسخ‌ها</Link>
             </>
           ) : <div className="mt-3 text-[13px] text-muted">هنوز فرم ارزیابی سلامت را تکمیل نکرده‌اید.</div>}

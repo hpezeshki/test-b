@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { ArrowLeft, Quote, Sparkles, Star } from 'lucide-react';
+import { ArrowLeft, Check, Quote, Star } from 'lucide-react';
 import { COACHES } from '@/data/seed/coaches';
 import { PACKAGES } from '@/data/seed/packages';
 import { MODALITY_INFO, POSTS, TESTIMONIALS } from '@/data/seed/content';
@@ -36,17 +36,19 @@ export function Hero() {
         </div>
         <div className="relative fade-up" style={{ animationDelay: '120ms' }}>
           <Photo srcs={IMAGES.hero} alt="استودیو پیلاتس ریفرمر والیسان" priority hover={false} overlay="soft" className="aspect-[4/5] rounded-[var(--radius-xl)] shadow-lg ring-1 ring-gold-400/40">
-            <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6 text-on-brand">
-              <div><div className="eyebrow !text-on-brand/80">Studio · Elahieh</div><div className="mt-1 text-[15px] font-medium">«قدرت واقعی از سکوتِ مرکز بدن آغاز می‌شود.»</div></div>
-              <img src="/brand/logo-lockup.png" alt="" className="hidden h-16 w-auto object-contain drop-shadow-md sm:block" />
+            <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-4 p-5 text-on-brand md:p-6">
+              <div className="rounded-full bg-ink/25 px-3 py-1 backdrop-blur-sm"><span className="eyebrow !text-on-brand/90 !text-[11px]">Studio · Elahieh</span></div>
+              <img src="/brand/logo-lockup.png" alt="" className="hidden h-14 w-auto object-contain drop-shadow-md sm:block" />
             </div>
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink/45 to-transparent" aria-hidden />
+            <div className="absolute inset-x-0 bottom-0 p-5 pb-24 text-on-brand md:p-6 md:pb-24"><div className="text-[15px] font-medium leading-7 drop-shadow-sm">«قدرت واقعی از سکوتِ مرکز بدن آغاز می‌شود.»</div></div>
           </Photo>
-          <div className="glass absolute -bottom-5 -start-3 flex items-center gap-3 rounded-[var(--radius-lg)] p-3 pe-5 shadow-lg md:-start-8">
-            <Photo srcs={IMAGES.heroThumb} alt="" hover={false} className="size-14 rounded-[var(--radius-sm)]" hue="300" />
-            <div>
-              <div className="text-[12px] text-muted">جلسه بعدی خالی</div>
-              <div className="mt-0.5 text-[15px] font-medium">امروز · ساعت {f.s('18:00')}</div>
-              <div className="text-[12px] text-brand-700">پیلاتس ریفرمر · {f.s(2)} صندلی باقی‌مانده</div>
+          <div className="glass-strong absolute -bottom-6 start-4 z-10 flex items-center gap-3 rounded-[var(--radius-lg)] p-3 pe-5 md:-start-6">
+            <Photo srcs={IMAGES.heroThumb} alt="" hover={false} className="size-14 shrink-0 rounded-[var(--radius-sm)]" hue="300" />
+            <div className="flex flex-col gap-0.5 leading-5">
+              <span className="text-[12px] leading-4 text-muted">جلسه بعدی خالی</span>
+              <span className="text-[15px] font-medium leading-6">امروز · ساعت {f.s('18:00')}</span>
+              <span className="text-[12px] leading-4 text-brand-700">پیلاتس ریفرمر · {f.s(2)} صندلی باقی‌مانده</span>
             </div>
           </div>
         </div>
@@ -119,7 +121,7 @@ export function PricingTable({ compact }: { compact?: boolean }) {
             </div>
             {p.compareAtToman && <div className="mt-1 text-[12px] text-muted line-through tabular">{f.toman(p.compareAtToman)}</div>}
             <ul className="mt-5 flex-1 space-y-2 text-[13.5px] text-ink-2">
-              {p.perks.map((x) => <li key={x} className="flex items-start gap-2"><Sparkles size={14} className="mt-1.5 shrink-0 text-brand-500" /><span>{f.s(x)}</span></li>)}
+              {p.perks.map((x) => <li key={x} className="flex items-start gap-2.5"><span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-brand-50 text-brand-700 ring-1 ring-brand-100"><Check size={12} strokeWidth={2} /></span><span>{f.s(x)}</span></li>)}
             </ul>
             <Button href={`/join/${p.slug}/assessment/`} className="mt-6" variant={p.isFeatured ? 'primary' : 'secondary'} full>{p.kind === 'drop_in' ? 'رزرو جلسه تکی' : 'شروع ثبت‌نام'}</Button>
           </div>
@@ -185,7 +187,7 @@ export function CtaBand() {
         <div className="eyebrow !text-gold-400">Begin</div>
         <h2 className="mt-3 text-[28px] font-light md:text-[36px]">اولین جلسه‌ی خود را امروز رزرو کنید</h2>
         <p className="mx-auto mt-3 max-w-lg text-[15px] leading-8 text-on-brand/85">با یک جلسه‌ی تکی شروع کنید؛ ارزیابی وضعیت بدنی و معرفی مربی مناسب، هدیه‌ی ما به شماست.</p>
-        <div className="mt-7 flex justify-center gap-3"><Button href="/join/drop-in/assessment/" size="lg" variant="secondary">رزرو جلسه تکی</Button><Button href="/pricing/" size="lg" variant="gold" className="!text-on-brand !border-gold-400/70">مشاهده عضویت‌ها</Button></div>
+        <div className="mt-7 flex justify-center gap-3"><Button href="/join/drop-in/assessment/" size="lg" variant="light">رزرو جلسه تکی</Button><Button href="/pricing/" size="lg" variant="gold" className="!text-on-brand !border-gold-400/70">مشاهده عضویت‌ها</Button></div>
         </div>
       </div>
     </section>

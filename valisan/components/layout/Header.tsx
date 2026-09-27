@@ -38,7 +38,7 @@ export function Header() {
     <header className={cn('sticky top-0 z-40 border-b backdrop-blur-lg backdrop-saturate-150 transition-all duration-300', scrolled || open ? 'bg-bg/85 border-brand-300/50 shadow-[0_8px_30px_-16px_rgba(212,119,207,0.35)]' : 'bg-bg/70 border-brand-300/25')}>
       <div className="container-x flex h-16 items-center justify-between gap-3 md:h-[72px]">
         <Link href="/" className="flex shrink-0 items-center gap-3" aria-label="والیسان">
-          <img src="/brand/logo-v.png" alt="" className="h-9 w-auto object-contain md:h-10" />
+          <img src="/brand/logo-v.png" alt="" className="h-9 w-auto object-contain mix-blend-multiply md:h-10" />
           <span className="flex flex-col leading-none">
             <span className="latin text-[19px] font-semibold tracking-[0.18em] text-ink md:text-[20px]">VALISAN</span>
             <span className="eyebrow whitespace-nowrap text-[9px] tracking-[0.28em]">Pilates · Yoga · Wellness</span>

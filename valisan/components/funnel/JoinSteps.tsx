@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, CheckCircle2, ClipboardCheck, CreditCard, Landmark, PencilLine, Sparkles, XCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, ClipboardCheck, CreditCard, Hourglass, Landmark, PencilLine, XCircle } from 'lucide-react';
 import { useHydrated, useStore } from '@/data/store';
 import { packageBySlug } from '@/data/seed/packages';
 import { useFmt, useSessionUser } from '@/lib/hooks';
@@ -137,7 +137,7 @@ export function DoneStep({ slug }: { slug: string }) {
   return (
     <FunnelShell pkg={pkg} step={4}>
       <Card className="mx-auto max-w-xl p-10 text-center fade-up">
-        {ok ? <SuccessMark /> : pending ? <span className="mx-auto grid size-16 place-items-center rounded-full bg-warning/15 text-[#9A6F1E]"><Sparkles size={30} /></span> : <span className="mx-auto grid size-16 place-items-center rounded-full bg-danger/10 text-danger"><XCircle size={30} /></span>}
+        {ok ? <SuccessMark /> : pending ? <span className="mx-auto grid size-16 place-items-center rounded-full bg-warning/15 text-[#9A6F1E]"><Hourglass size={30} strokeWidth={1.5} /></span> : <span className="mx-auto grid size-16 place-items-center rounded-full bg-danger/10 text-danger"><XCircle size={30} /></span>}
         <h1 className="mt-5 text-[26px] font-light">{ok ? 'عضویت شما فعال شد' : pending ? 'رسید شما در صف بررسی است' : 'پرداخت انجام نشد'}</h1>
         <p className="mt-2 text-[14.5px] leading-7 text-ink-2">
           {ok && 'پرداخت با موفقیت انجام شد. تأیید رزرو از طریق پیامک برای شما ارسال شد.'}
